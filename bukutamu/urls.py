@@ -17,7 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 
+from . import views
+app_name = 'bukutamu'
+
 urlpatterns = [
-    path('tamu/', include('bukutamu.urls')),
-    path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('signin', views.signin, name='signin'),
+    path('out', views.out, name = 'out'),
+    path('signout', views.signout, name="signout")
 ]

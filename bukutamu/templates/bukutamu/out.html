@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Halaman Utama Buku Tamu</title>
+</head>
+<body>
+	<div id="Infotable">
+		<div id="Infofoto">
+			<img src="Person.jpg" height="225" width="180">
+		</div>
+		<div id="Infoform">
+			
+			<form method="POST" action="{%url 'bukutamu:signout'%}">
+			{% csrf_token %}
+			<h3>UID : <input type="text" name="UID" id="UID"></h3>
+			
+			<input type="submit" name="out">
+			</form>
+		</div>
+		<div id="infohistory">
+			<tr>
+    			<td>Tanggal Kunjungan</td>
+   				<td>Bertemu dengan</td>
+    			<td>Keperluan</td>
+  			</tr>
+		</div>
+
+	</div>
+
+</body>
+</html>
