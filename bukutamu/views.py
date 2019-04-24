@@ -42,7 +42,7 @@ def signin(request):
 		bertemu_dengan = request.POST['Bertemu'],
 		alasan_kedatangan = request.POST['Keperluan'],
 		tanggal_keluar = timezone.now(),
-		lama_kedatangan = timezone.now(),
+		lama_kedatangan = timezone.now() - timezone.now(),
 		suhu_badan = suhu,
 		terdapat_luka_terbuka = luka,
 		out = False
