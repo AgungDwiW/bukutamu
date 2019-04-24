@@ -11,12 +11,12 @@
 		<div id="Infoform">
 			<form method="POST" action="{%url 'bukutamu:signin'%}">
 			{% csrf_token %}
-			<h3>UID : <input type="text" name="UID" id="UID"></h3>
-			<h3>Type ID : <input type="text" name="TID" id="TID"></h3>
-			<h3>Nama : <input type="text" name="Nama" id="Nama"></h3>
-			<h3>No HP. : <input type="text" name="NoHP" id="NoHP"></h3>
-			<h3>Jenis Kelamin : <input type="text" name="Kelamin" id="Kelamin"></h3>
-			<h3>Institusi : <input type="text" name="Institusi" id="Institusi"></h3>
+			<h3>UID : <input type="text" name="UID" id="UID" value = {{tamu.uid}}></h3>
+			<h3>Type ID : <input type="text" name="TID" id="TID" value = {{tamu.tipeid}}></h3>
+			<h3>Nama : <input type="text" name="Nama" id="Nama" value = {{tamu.nama_tamu}}></h3>
+			<h3>No HP. : <input type="text" name="NoHP" id="NoHP" value = {{tamu.no_hp_tamu}}></h3>
+			<h3>Jenis Kelamin : <input type="text" name="Kelamin" id="Kelamin" value = {{tamu.jenis_kelamin}}></h3>
+			<h3>Institusi : <input type="text" name="Institusi" id="Institusi" value = {{tamu.perusahaan}}></h3>
 			<h3>Suhu Badan : <input type="text" name="SuhuBadan" id="SuhuBadan"></h3>
 			<h3>Bertemu Dengan : <input type="text" name="Bertemu" id="Bertemu"></h3>
 			<h3>Keperluan : <input type="text" name="Keperluan" id="Keperluan"></h3>

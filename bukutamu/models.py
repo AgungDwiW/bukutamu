@@ -11,7 +11,7 @@ class Tamu(models.Model):
     nama_tamu = models.CharField(max_length = 100)
     no_hp_tamu = models.CharField(max_length = 30)
     jenis_kelamin = models.CharField(max_length = 20)
-    
+    signed_in = models.BooleanField()
     perusahaan = models.CharField(max_length = 100)
     daerah_perusahaan = models.CharField (max_length = 40)
     terakhir_datang = models.DateTimeField('terakhir_datang')

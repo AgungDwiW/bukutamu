@@ -21,8 +21,10 @@ from . import views
 app_name = 'bukutamu'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+	path('', views.index, name='index'),
+	path('form', views.form, name='form'),
+    # path('', views.index, name='index'),
     path('signin', views.signin, name='signin'),
-    path('out', views.out, name = 'out'),
-    path('signout', views.signout, name="signout")
+    # path('out', views.out, name = 'out'),
+    # path('signout', views.signout, name="signout")
 ]
