@@ -1,0 +1,39 @@
+
+<head>
+    {% load static %}
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" id="bootstrap-css">
+    <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
+    <script src="{% static "jquery.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "bukutamu/js/form.js" %}"></script>
+    
+    <!------ Include the above in your HEAD tag ---------->
+    <title>Bukutamu</title>
+</head>
+
+<body>
+  <video id="player" controls autoplay></video>
+<button id="capture">Capture</button>
+<canvas id="canvas" width=320 height=240></canvas>
+<script>
+  const player = document.getElementById('player');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const captureButton = document.getElementById('capture');
+
+  const constraints = {
+    video: true,
+  };
+
+  captureButton.addEventListener('click', () => {
+    // Draw the video frame to the canvas.
+    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+  });
+
+  // Attach the video stream to the video element and autoplay.
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      player.srcObject = stream;
+    });
+</script>
+</body>

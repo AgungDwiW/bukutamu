@@ -38,6 +38,7 @@ class Kedatangan(models.Model):
     def signout (self):
         self.tanggal_keluar = timezone.now()
         self.lama_kedatangan = self.tanggal_keluar - self.tanggal_kedatangan
+        self.out = True
 
     def checkme(self):
         returned = [self.tamu, self.alasan_kedatangan, self.tanggal_kedatangan]

@@ -27,4 +27,5 @@ urlpatterns = [
     path('signin', views.signin, name='signin'),
     # path('out', views.out, name = 'out'),
     # path('signout', views.signout, name="signout")
+    path('test', views.test, name='test')
 ]

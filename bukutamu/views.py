@@ -10,7 +10,8 @@ from django.urls import reverse
 # Create your views here.
 
 def index(request):
-    return render(request, 'bukutamu/signin.html')
+    return render(request, 'bukutamu/index.html')
+
 
 def form (request):
     formdata = {}
@@ -20,12 +21,12 @@ def form (request):
         # searching existing tamu's data
         tamu = Tamu.objects.get(uid = request.POST['UID'])
         if (tamu.signed_in == True):
-            tamu.signed_in == False
+            tamu.signed_in = False
             tamu.save()
             kedatangan = tamu.kedatangan_set.get(out = False)
             kedatangan.signout()
             kedatangan.save()
-            return render(request, 'bukutamu/signin.html')
+            return HttpResponseRedirect(reverse('bukutamu:index'))
 
         formdata["flag"] = True
         
@@ -74,3 +75,6 @@ def signin(request):
         out = False
         )
     return HttpResponseRedirect(reverse('bukutamu:index'))
+
+def test(request):
+    return render(request, 'bukutamu/test.html')
