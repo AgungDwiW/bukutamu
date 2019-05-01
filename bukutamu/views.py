@@ -27,13 +27,12 @@ def form (request):
     try:
         # searching existing tamu's data
         tamu = Tamu.objects.get(uid = request.POST['UID'])
-        if (tamu.signed_in == True):
-            tamu.signed_in = False
-            
-            return render(request, "bukutamu/form.html", formdata)
-
-        formdata["flag"] = True
         
+        formdata["flag"] = True
+        if (tamu.signed_in == True):
+            formdata["flag"] = False
+            kedatangan = tamu.kedatangan_set.get(out = False)
+            formdata["kedatangan"]= kedatangan
         formdata['tamu'] = tamu
 
     except (KeyError, Tamu.DoesNotExist):
@@ -61,7 +60,8 @@ def signin(request):
             perusahaan = request.POST['Institusi'],
             terakhir_datang = timezone.now(),
             image = None,
-            signed_in = True
+            signed_in = True,
+            sakit = request.POST['Sakit'],
             )
         tamu.image = image
         tamu.save()
@@ -89,12 +89,13 @@ def signin(request):
 
 def signout(request):
     tamu = Tamu.objects.get(uid = request.POST['UID'])
+    tamu.signed_in = False
     tamu.save()
     kedatangan = tamu.kedatangan_set.get(out = False)
     kedatangan.signout()
     kedatangan.save()
-    
-    
+    return HttpResponseRedirect(reverse('bukutamu:index'))
+
 def test(request):
     return render(request, 'bukutamu/test.html')
 

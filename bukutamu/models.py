@@ -33,6 +33,7 @@ class Kedatangan(models.Model):
     lama_kedatangan = models.DurationField("lama")
     suhu_badan = models.DecimalField(max_digits=5, decimal_places=2)
     terdapat_luka_terbuka = models.BooleanField()
+    sakit =models.CharField(max_length=(100), null = True)
     out = models.BooleanField()
     def signout (self):
         self.tanggal_keluar = timezone.now()

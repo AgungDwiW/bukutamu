@@ -14,16 +14,27 @@
 <div class = "container text-center">
  <div class="row">
   <div class="col-sm-6">
-  
-    <video id="player" controls autoplay width = 100% "></video>
+  <!--
+  flag = true -> logged in
+  flag = false -> logged out
+  -->
+   
     {%if flag%}
-        <img source = "{%static 'bukutamu/camera/{{uid}}'%}"></img>
+        <video id="player" controls autoplay width = 100% "></video>
+        <canvas id="canvas" width = 100% height = 100%></canvas>
     {%else%}
-    <canvas id="canvas" width = 100% height = 100%></canvas>
+        {% with 'bukutamu/camera/'|add:uid as image_static %}
+        <img src = "{%static image_static%}"></img>
+        {% endwith %}
+        
     {%endif%}
    </div>
   <div class="col-sm-6">
-      <form method = "POST" action = {%url 'bukutamu:signin'%} class = "text-left">
+      {%if flag%}
+          <form method = "POST" action = {%url 'bukutamu:signin'%} class = "text-left">
+      {%else%}
+          <form method = "POST" action = {%url 'bukutamu:signout'%} class = "text-left">
+      {%endif%}
 			{% csrf_token %}
 			<input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" /><br>
 			UID : <input type="text" name="UID" id="UID" value = {{uid}}><br>
@@ -33,19 +44,24 @@
 			Jenis Kelamin : <input type="text" name="Kelamin" id="Kelamin" value = {{tamu.jenis_kelamin}}><br>
 			Institusi : <input type="text" name="Institusi" id="Institusi" value = {{tamu.perusahaan}}><br>
 			Suhu Badan : <input type="text" name="SuhuBadan" id="SuhuBadan" value = {{kedatangan.suhu_badan}}><br>
-			Bertemu Dengan : <input type="text" name="Bertemu" id="Bertemu"><br>
-			Keperluan : <input type="text" name="Keperluan" id="Keperluan"><br>
-			Terdapat Luka terbuka : <input type="text" name="Luka" id="Luka"><br>
-			Sakit Terakhir : <input type="text" name="Sakit" id="Sakit"><br>
+			Bertemu Dengan : <input type="text" name="Bertemu" id="Bertemu" value = {{kedatangan.bertemu_dengan}}><br>
+			Keperluan : <input type="text" name="Keperluan" id="Keperluan" value = {{kedatangan.alasan_kedatangan}}><br>
+			Terdapat Luka terbuka : <input type="text" name="Luka" id="Luka" value = {{kedatangan.terdapat_luka_terbuka}}><br>
+			Sakit Terakhir : <input type="text" name="Sakit" id="Sakit" value = {{kedatangan.sakit}}><br>
 			<input type="hidden" id = "Image" name = "Image">
+			{%if flag%}
 			<input type="button" name="takepic" id = "takepic" value="takepic">
 			<input type="submit" name="submit" id = "submit">
+			{%else%}
+			<input type="submit" name="submit" id = "submit" value = "logout">
+			{%endif%}
+			
 		</form>
   </div>
 </div>
 </div>
 
-
+{%if flag%}
 <script>
   
   const player = document.getElementById('player');
@@ -75,4 +91,5 @@
       player.srcObject = stream;
     });
 </script>
+{%endif%}
 </body>
