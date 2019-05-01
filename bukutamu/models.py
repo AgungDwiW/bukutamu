@@ -15,7 +15,7 @@ class Tamu(models.Model):
     perusahaan = models.CharField(max_length = 100)
     daerah_perusahaan = models.CharField (max_length = 40)
     terakhir_datang = models.DateTimeField('terakhir_datang')
-    
+    image = models.ImageField(null = True)
     uid.default = '000000000000'
     def checkme(self):
         returned = [self.nama_tamu, self.terakhir_datang]

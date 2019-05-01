@@ -5,21 +5,45 @@
     <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
     <script src="{% static "jquery.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "bukutamu/js/form.js" %}"></script>
     
     <!------ Include the above in your HEAD tag ---------->
     <title>Bukutamu</title>
 </head>
 
 <body>
-  <video id="player" controls autoplay></video>
-<button id="capture">Capture</button>
-<canvas id="canvas" width=320 height=240></canvas>
+<div class="wrapper ">
+    <div id ="cam">
+    <video id="player" controls autoplay width = "300" "></video><br>
+<canvas id="canvas" ></canvas>
+      <div id="formContent">
+        <div id="Infoform">
+			<form method = "POST" action = {%url 'bukutamu:signin'%}>
+			{% csrf_token %}
+			<input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" /><br>
+			UID : <input type="text" name="UID" id="UID" value = {{tamu.uid}}><br>
+			Type ID : <input type="text" name="TID" id="TID" value = {{tamu.tipeid}}><br>
+			Nama : <input type="text" name="Nama" id="Nama" value = {{tamu.nama_tamu}}><br>
+			No HP. : <input type="text" name="NoHP" id="NoHP" value = {{tamu.no_hp_tamu}}><br>
+			Jenis Kelamin : <input type="text" name="Kelamin" id="Kelamin" value = {{tamu.jenis_kelamin}}><br>
+			Institusi : <input type="text" name="Institusi" id="Institusi" value = {{tamu.perusahaan}}><br>
+			Suhu Badan : <input type="text" name="SuhuBadan" id="SuhuBadan"><br>
+			Bertemu Dengan : <input type="text" name="Bertemu" id="Bertemu"><br>
+			Keperluan : <input type="text" name="Keperluan" id="Keperluan"><br>
+			Terdapat Luka terbuka : <input type="text" name="Luka" id="Luka"><br>
+			Sakit Terakhir : <input type="text" name="Sakit" id="Sakit"><br>
+			<input type="hidden" id = "Image" name = "Image">
+			<input type="button" name="takepic" id = "takepic" value="takepic">
+			<input type="submit" name="submit" id = "submit">
+			</form>
+		</div>
+    </div>
+</div>
 <script>
   const player = document.getElementById('player');
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  const captureButton = document.getElementById('capture');
+  const captureButton = document.getElementById('takepic');
+  const image = document.getElementById('Image')
 
   const constraints = {
     video: true,
@@ -27,7 +51,13 @@
 
   captureButton.addEventListener('click', () => {
     // Draw the video frame to the canvas.
+    handler = document.getElementById('image_location')
+    handler = player
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
+     //get image
+      var Pic = document.getElementById("canvas").toDataURL("image/png");
+      Pic = Pic.replace(/^data:image\/(png|jpg);base64,/, "");
+      image.value = Pic
   });
 
   // Attach the video stream to the video element and autoplay.
@@ -36,4 +66,5 @@
       player.srcObject = stream;
     });
 </script>
+
 </body>

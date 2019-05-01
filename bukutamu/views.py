@@ -34,13 +34,14 @@ def form (request):
 
     except (KeyError, Tamu.DoesNotExist):
         formdata["flag"] = False
-    return render(request, "bukutamu/form.html", formdata)
+    return render(request, "bukutamu/test.html", formdata)
 
 
 def signin(request):
     try:
         tamu = Tamu.objects.get(uid = request.POST['UID'])
         tamu.signed_in = True
+        tamu.image = request.POST['Image']
         tamu.save()
     except (KeyError, Tamu.DoesNotExist):
         #if not exist create new
@@ -51,7 +52,8 @@ def signin(request):
             no_hp_tamu = request.POST['NoHP'],
             jenis_kelamin = request.POST['Kelamin'],
             perusahaan = request.POST['Institusi'],
-            terakhir_datang = timezone.now()
+            terakhir_datang = timezone.now(),
+            image = request.POST['Image']
             )
         tamu.save()
     
@@ -78,3 +80,6 @@ def signin(request):
 
 def test(request):
     return render(request, 'bukutamu/test.html')
+
+def formtest(request):
+    return HttpResponse(request.POST)
