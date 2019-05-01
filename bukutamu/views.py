@@ -87,7 +87,7 @@ def signin(request):
         )
     return HttpResponseRedirect(reverse('bukutamu:index'))
 
-def signout(request):s
+def signout(request):
     tamu = Tamu.objects.get(uid = request.POST['UID'])
     tamu.save()
     kedatangan = tamu.kedatangan_set.get(out = False)
