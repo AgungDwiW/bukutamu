@@ -14,7 +14,7 @@ class Tamu(models.Model):
     perusahaan = models.CharField(max_length = 100)
     daerah_perusahaan = models.CharField (max_length = 40)
     terakhir_datang = models.DateTimeField('terakhir_datang')
-    image = models.ImageField(upload_to= "bukutamu/static/bukutamu/camera/",null = True)
+    image = models.ImageField(upload_to= "static/bukutamu/camera/",null = True)
     uid.default = '000000000000'
     def checkme(self):
         returned = [self.nama_tamu, self.terakhir_datang]
@@ -22,6 +22,8 @@ class Tamu(models.Model):
     def last(self):
         #bool terakhir datang 30 hari terakhir
         return self.terakhir_datang >= timezone.now() - datetime.timedelta(days=30)
+    def __str__(self):
+        return self.nama_tamu
 
 
 class Kedatangan(models.Model):

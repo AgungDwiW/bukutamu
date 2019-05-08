@@ -23,8 +23,8 @@
         <video id="player" controls autoplay width = 100% "></video>
         <canvas id="canvas" width = 100% height = 100%></canvas>
     {%else%}
-        {% with 'bukutamu/camera/'|add:uid as image_static %}
-        <img src = "{%static image_static%}"></img>
+        {% with '/'|add:tamu.image.url as image_static %} 
+            <img src = "{{tamu.image.url}}"></img>
         {% endwith %}
         
     {%endif%}
