@@ -71,10 +71,12 @@ def signin(request):
         luka = True
     else:
         luka = False
-
-    suhu = request.POST['SuhuBadan']
-    suhu = suhu.replace(',','.')
-    suhu = float(suhu)
+    try:
+        suhu = request.POST['SuhuBadan']
+        suhu = suhu.replace(',','.')
+        suhu = float(suhu)
+    except:
+        suhu = 0.0
 
     tamu.kedatangan_set.create(
         tanggal_kedatangan = timezone.now(),
