@@ -17,8 +17,7 @@ def index(request):
 
 def b64toMime(b64_text):
     image_data = b64decode(b64_text)
-    image = ContentFile(image_data, 'whatup.png')
-    return image
+    return image_data
 
 def form (request):
     formdata = {}
@@ -34,9 +33,12 @@ def form (request):
             kedatangan = tamu.kedatangan_set.get(out = False)
             formdata["kedatangan"]= kedatangan
         formdata['tamu'] = tamu
+        # tamu.image = tamu.image.url
+        # tamu.image = tamu.image.split("/")
+        # tamu.image = tamu.image[len(tamu.image)-1]
 
     except (KeyError, Tamu.DoesNotExist):
-        formdata["flag"] = False
+        formdata["flag"] = True
     return render(request, "bukutamu/form.html", formdata)
 
 
@@ -61,7 +63,6 @@ def signin(request):
             terakhir_datang = timezone.now(),
             image = None,
             signed_in = True,
-            sakit = request.POST['Sakit'],
             )
         tamu.image = image
         tamu.save()
@@ -83,7 +84,8 @@ def signin(request):
         lama_kedatangan = timezone.now() - timezone.now(),
         suhu_badan = suhu,
         terdapat_luka_terbuka = luka,
-        out = False
+        out = False,
+        sakit = request.POST['Sakit'],
         )
     return HttpResponseRedirect(reverse('bukutamu:index'))
 
