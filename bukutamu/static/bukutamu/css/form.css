@@ -106,3 +106,13 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 body{
   background-color: lightblue
 }
+
+
+.v-divider{
+ border-left: 1px solid grey;
+ }
+
+ .vertical-align {
+    display: flex;
+    align-items: center;
+}

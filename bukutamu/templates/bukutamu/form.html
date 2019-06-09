@@ -1,112 +1,159 @@
 <head>
     {% load static %}
     <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" id="bootstrap-css">
-    <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
     <script src="{% static "jquery.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
     <!------ Include the above in your HEAD tag ---------->
     <title>Bukutamu</title>
+
 </head>
 
-<body>
+<body style="font-size: 15px">
  <div class="wrapper"> 
   <div id="formContent">
-   <div class="row">
-    <div class="cameracontrol col-sm-5 text-center">
+   <div class="row vertical-align">
+    <div class="col-sm-6" >
       {%if flag%}
-          <video id="player" controls autoplay width = 100% "></video>
-          <canvas id="canvas" width = 100% height = 100%></canvas>
+          <video id="player" controls autoplay width="100%" ></video>
+          <canvas id="canvas" class="col-sm-12" hidden=""></canvas>
       {%else%}
           {% with '/'|add:tamu.image.url as image_static %} 
-              <img src = "{{tamu.image.url}}"></img>
+              <img src = "{{tamu.image.url}}" width=100% ></img>
           {% endwith %}
           
       {%endif%}
+      <br>
+      <br>
+      <div class="row">
+      	<div class="table-responsive col-sm-12">
+		  <table class="table ">
+		    <thead>
+		      <tr >
+		        <th class="w-25">Tanggal</th>
+		        <th class="w-25">Bertemu dengan</th>
+		        <th class="w-50">Keperluan</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		    {%for item in history%}
+		      <tr >
+		        <td>{{item.tanggal_keluar}}</td>
+		        <td>{{item.bertemu_dengan}}</td>
+		        <td>{{item.alasan_kedatangan }}</td>
+		      </tr>
+		    {%endfor%}
+		    </tbody>
+		  </table>
+		</div>
+      </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 v-divider">
         {%if flag%}
-          <form method = "POST" action = {%url 'bukutamu:signin'%} class = "text-left">
+          <form method = "POST" action = {%url 'bukutamu:signin'%} class = "text-left"  onsubmit="validateForm()">
         {%else%}
             <form method = "POST" action = {%url 'bukutamu:signout'%} class = "text-left">
         {%endif%}
   			{% csrf_token %}
-  			<input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" /><br>
+  			<input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" 
+  			 {%if not flag%} readonly {%endif%}><br>
 	        <div class="form-group row"><!-- UID -->
-	          <label class="control-label col-sm-2" for="UID">UID:</label>
-	          <div class="col">  
-	            <input type="text" class="form-control inputsm" name="UID" id="UID" placeholder="UID" value = {{uid}}> 
+	          <label class="control-label col-sm-3" for="UID">UID:</label>
+	          <div class="col-sm-6">  
+	            <input type="text" class="form-control inputsm" name="UID" id="UID" placeholder="UID" value = {{uid}} readonly > 
 	          </div>
-	          <div class="col">
-	            <input type="text" class="form-control inputsm" name="TID" id="TID" placeholder="Tipe id"  value = {{tamu.tipeid}}>
+	          <div class="col-sm-3">
+	            <select class="form-control inputsm" name="TID" id="TID" placeholder="Tipe id"  value = {{tamu.tipeid}} {%if not flag%} readonly {%endif%}>
+	            	<option>KTP</option>
+	            	<option>SIM</option>
+	            </select>
 	          </div>
 	        </div>
 
 	        <div class="form-group row"> <!-- nama -->
-	          <label class="control-label col-sm-2" for="Nama">Nama:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="Nama" id="Nama" placeholder="Nama" value = {{tamu.nama_tamu}} >
+	          <label class="control-label col-sm-3" for="Nama">Nama:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" {%if not flag%} readonly {%endif%} required value = {{tamu.nama_tamu}}  >
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- no HP -->
-	          <label class="control-label col-sm-2" for="NoHP">Nomor Handphone:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" value = {{tamu.no_hp_tamu}}>
+	          <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
+	          <div class="col-sm-9">  
+	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required value = {{tamu.no_hp_tamu}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"><!-- Jenis kelamin -->
-	          <label class="control-label col-sm-2" for="kelamin">Jenis Kelamin:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" value = {{tamu.jenis_kelamin}}>
+	          <label class="control-label col-sm-3" for="kelamin">Jenis Kelamin:</label>
+	          <div class="col-sm-9">  
+	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" value = {{tamu.jenis_kelamin}} {%if not flag%} readonly {%endif%}>
+	            	<option>Laki laki</option>
+				    <option>Perempuan</option>
+	            </select>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- Institusi  -->
-	          <label class="control-label col-sm-2" for="Institusi">Institusi:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" value = {{tamu.perusahaan}}>
+	          <label class="control-label col-sm-3" for="Institusi">Institusi:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" required value = {{tamu.perusahaan}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- SUhu badan -->
-	          <label class="control-label col-sm-2" for="SuhuBadan">Suhu Badan:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="SuhuBadan" id="SuhuBadan" placeholder="xx,x" value = {{kedatangan.suhu_badan}}>
+	          <label class="control-label col-sm-3" for="SuhuBadan">Suhu Badan:</label>
+	          <div class="col-sm-9">  
+	            <input type="number" step="any" class="form-control inputsm" name="SuhuBadan" id="SuhuBadan" placeholder="xx,x" required value = {{kedatangan.suhu_badan}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- BErtemu dengan -->
-	          <label class="control-label col-sm-2" for="Bertemu">Bertemu dengan:</label>
-	          <div class="col-sm-6">  
+	          <label class="control-label col-sm-3" for="Bertemu">Bertemu dengan:</label>
+	          <div class="col-sm-9">  
 	            <input type="text" class="form-control inputsm" name="Bertemu" id="Bertemu"
-	            placeholder="Bapak/Ibu" value = {{kedatangan.bertemu_dengan}}>
+	            placeholder="Bapak/Ibu" required value = {{kedatangan.bertemu_dengan}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- Keperluan -->
-	          <label class="control-label col-sm-2" for="Keperluan">Keperluan:</label>
-	          <div class="col-sm-6">  
-	            <input type="text" class="form-control inputsm" name="Keperluan" id="Keperluan" placeholder="Untuk" value = {{kedatangan.alasan_kedatangan}}>
+	          <label class="control-label col-sm-3" for="Keperluan">Keperluan:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Keperluan" id="Keperluan" placeholder="Untuk" required value = {{kedatangan.alasan_kedatangan}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
-	        <div class="form-group text-left">
-	          <label class="control-label col-sm-4" for="Luka">Terdapat Luka terbuka:</label>
-	          <div class="col-sm-8">  
-	            <input type="text" class="form-control inputsm" name="Luka" id="Luka" placeholder="Ya/Tidak" value = {{kedatangan.terdapat_luka_terbuka}}>
+	        <div class="form-group row ">
+	          <label class="control-label col-sm-5" for="Luka">Terdapat Luka terbuka:</label>
+	      	<!-- </div>
+	      	<div class="form-group row"> -->
+	          	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="Luka" id="Luka" {% if kedatangan.terdapat_luka_terbuka%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} {%if not flag%}  disabled {%endif%} value = "1"> Ya
+	        	</label>
+	        	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="Luka"{%if not flag%}  disabled {%endif%} {% if not  kedatangan.terdapat_luka_terbuka%} checked=true {%endif%} id = Luka value="0"> Tidak
+	        	</label>
+	        </div>
+	        <div class="form-group row">
+	          <label class="control-label col-sm-5" for="sakit"> Sakit dalam 3 hari terakhir:</label>
+	          	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="sakit" id="sakit_radio_y" {% if  sakit%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} onchange="sakit_aktive()"> Ya
+	        	</label>
+	        	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="sakit" id="sakit_radio_n" value = "Tidak" {% if not sakit%} checked=true {%endif%}{%if not flag%} disabled {%endif%}  onchange="sakit_aktive()"> Tidak
+	        	</label>
+
+	        </div>
+	        <div class="form-group row " >
+	        <label class="control-label col-sm-3" for="sakit"> Jenis sakit :</label>
+	          <div class="col-sm-9">  
+	          	
+	            <input type="text" class="form-control input-sm " name="Sakit" id="Sakit"  placeholder="Sehat" {%if not flag%} readonly {%endif%} required value = {{kedatangan.sakit}}  >
 	          </div>
 	        </div>
-	        <div class="form-group text-left">
-	          <label class="control-label col-sm-4" for="sakit"> Sakit dalam 3 hari terakhir:</label>
-	          <div class="col-sm-8">  
-	            <input type="text" class="form-control " name="Sakit" id="Sakit" placeholder="Sakit" value = {{kedatangan.sakit}}>
-	          </div>
-	        </div>
-	        <br>
-	        <br>
+	        <div class="form-group row " >
   			<input type="hidden" id = "Image" name = "Image">
   			{%if flag%}
-  			<input type="button" name="takepic" id = "takepic" value="takepic">
-  			<input type="submit" name="submit" id = "submit">
+  			<input type="submit" name="submit" id = "submit" class="col-sm-11 center">
   			{%else%}
-  			<input type="submit" name="submit" id = "submit" value = "logout">
+  			<input type="submit" name="submit" id = "submit" class="col-sm-11 center" value = "logout">
   			{%endif%}	
+  			</div>
   		</form>
     </div>
   </div>
@@ -118,15 +165,23 @@
   const player = document.getElementById('player');
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  const captureButton = document.getElementById('takepic');
   const image = document.getElementById('Image')
+  const radio_sakit = document.getElementById('sakit_radio_y')
+  const sakit = document.getElementById('Sakit')
+  var sakit_flag = false
+
+  const nama = document.getElementById("Nama")
+  const hp = document.getElementById("NoHP")
+  const inst = document.getElementById("Institusi")
+  const suhu_badan = document.getElementById("SuhuBadan")
+  const bertemu = document.getElementById("Bertemu")
+  const keperluan = document.getElementById("Keperluan")
 
   const constraints = {
     video: true,
   };
-
-  captureButton.addEventListener('click', () => {
-    // Draw the video frame to the canvas.
+  function cameracapture (){
+  	// Draw the video frame to the canvas.
     handler = document.getElementById('image_location')
     handler = player
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
@@ -134,13 +189,26 @@
       var Pic = document.getElementById("canvas").toDataURL();
       Pic = Pic.replace(/^data:image\/(png|jpg);base64,/, "");
       image.value = Pic
-  });
+  }
+
+  function validateForm(){
+
+  	cameracapture();
+  }
+
+  function sakit_aktive(){
+	sakit_flag = !sakit_flag
+	sakit.readOnly = sakit_flag
+	sakit.required = !sakit_flag
+  }
+
 
   // Attach the video stream to the video element and autoplay.
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
       player.srcObject = stream;
     });
+  sakit_aktive()
 </script>
 {%endif%}
 </body>

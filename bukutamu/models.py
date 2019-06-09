@@ -12,7 +12,6 @@ class Tamu(models.Model):
     jenis_kelamin = models.CharField(max_length = 20)
     signed_in = models.BooleanField()
     perusahaan = models.CharField(max_length = 100)
-    daerah_perusahaan = models.CharField (max_length = 40)
     terakhir_datang = models.DateTimeField('terakhir_datang')
     image = models.ImageField(upload_to= "static/bukutamu/camera/",null = True)
     uid.default = '000000000000'

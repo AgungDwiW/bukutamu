@@ -23,7 +23,7 @@
         <!-- Login Form -->
         <form method="POST" action="{%url 'bukutamu:form'%}">
 			{% csrf_token %}
-          <input type="text" id="UID" class="" name="UID" placeholder="ID">
+          <input type="text" id="UID" class="" name="UID" placeholder="ID" required>
           <input type="submit" class="" value="Log In">
         </form>
 

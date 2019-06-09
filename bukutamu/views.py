@@ -13,6 +13,7 @@ import re
 # Create your views here.
 
 def index(request):
+    
     return render(request, 'bukutamu/index.html')
 
 def b64toMime(b64_text):
@@ -32,13 +33,26 @@ def form (request):
             formdata["flag"] = False
             kedatangan = tamu.kedatangan_set.get(out = False)
             formdata["kedatangan"]= kedatangan
+            formdata['sakit'] = len(kedatangan.sakit) != 0
         formdata['tamu'] = tamu
+        kedatangan_dulu = tamu.kedatangan_set.all()
+        kedatangan_dulu = kedatangan_dulu.order_by('-id')
+        kedatangan_dulu = list(kedatangan_dulu)
+        if len(kedatangan_dulu)>3:
+            kedatangan_dulu= kedatangan_dulu[:3]
+            a = kedatangan_dulu[2]
+            kedatangan_dulu[2] = kedatangan_dulu[0]
+            kedatangan_dulu[0]=a
+        for item in kedatangan_dulu:
+            item.tanggal_keluar = item.tanggal_keluar.date()
+        formdata["history"] = kedatangan_dulu
         # tamu.image = tamu.image.url
         # tamu.image = tamu.image.split("/")
         # tamu.image = tamu.image[len(tamu.image)-1]
 
     except (KeyError, Tamu.DoesNotExist):
         formdata["flag"] = True
+
     return render(request, "bukutamu/form.html", formdata)
 
 
@@ -46,11 +60,20 @@ def signin(request):
     image = request.POST['Image']
     image = b64decode(image)
     image = ContentFile(image, request.POST['UID'])
+
     try:
         tamu = Tamu.objects.get(uid = request.POST['UID'])
         tamu.signed_in = True
+        tamu.uid = request.POST['UID']
+        tamu.tipeid = request.POST['TID']
+        tamu.nama_tamu = request.POST['Nama']
+        tamu.no_hp_tamu = request.POST['NoHP']
+        tamu.jenis_kelamin = request.POST['Kelamin']
+        tamu.perusahaan = request.POST['Institusi']
+        tamu.terakhir_datang = timezone.now()
         tamu.image = image
         tamu.save()
+
     except (KeyError, Tamu.DoesNotExist):
         #if not exist create new
         tamu = Tamu(
@@ -66,11 +89,6 @@ def signin(request):
             )
         tamu.image = image
         tamu.save()
-    
-    if request.POST['Luka'] == 'True':
-        luka = True
-    else:
-        luka = False
     try:
         suhu = request.POST['SuhuBadan']
         suhu = suhu.replace(',','.')
@@ -85,7 +103,7 @@ def signin(request):
         tanggal_keluar = timezone.now(),
         lama_kedatangan = timezone.now() - timezone.now(),
         suhu_badan = suhu,
-        terdapat_luka_terbuka = luka,
+        terdapat_luka_terbuka = request.POST['Luka'],
         out = False,
         sakit = request.POST['Sakit'],
         )
