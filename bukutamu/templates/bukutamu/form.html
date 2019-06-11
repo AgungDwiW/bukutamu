@@ -75,19 +75,19 @@
 	        <div class="form-group row"> <!-- nama -->
 	          <label class="control-label col-sm-3" for="Nama">Nama:</label>
 	          <div class="col-sm-9">  
-	            <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" {%if not flag%} readonly {%endif%} required value = {{tamu.nama_tamu}}  >
+	            <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" {%if not flag%} readonly {%endif%} required  {%if tamu.nama_tamu%} readonly value = {{tamu.nama_tamu}} {%endif%}  >
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- no HP -->
 	          <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
 	          <div class="col-sm-9">  
-	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required value = {{tamu.no_hp_tamu}} {%if not flag%} readonly {%endif%}>
+	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"><!-- Jenis kelamin -->
 	          <label class="control-label col-sm-3" for="kelamin">Jenis Kelamin:</label>
 	          <div class="col-sm-9">  
-	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" value = {{tamu.jenis_kelamin}} {%if not flag%} readonly {%endif%}>
+	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} {%if not flag%} readonly {%endif%}>
 	            	<option>Laki laki</option>
 				    <option>Perempuan</option>
 	            </select>
@@ -96,7 +96,7 @@
 	        <div class="form-group row"> <!-- Institusi  -->
 	          <label class="control-label col-sm-3" for="Institusi">Institusi:</label>
 	          <div class="col-sm-9">  
-	            <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" required value = {{tamu.perusahaan}} {%if not flag%} readonly {%endif%}>
+	            <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" required {% if tamu.perusahaan%} readonly value = {{tamu.perusahaan}} {%endif%} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- SUhu badan -->
