@@ -8,7 +8,7 @@ from .models import Tamu, Kedatangan
 from django.utils import timezone
 from django.urls import reverse
 import re
-
+import os
 
 # Create your views here.
 
@@ -64,13 +64,17 @@ def signin(request):
     try:
         tamu = Tamu.objects.get(uid = request.POST['UID'])
         tamu.signed_in = True
-        tamu.uid = request.POST['UID']
-        tamu.tipeid = request.POST['TID']
-        tamu.nama_tamu = request.POST['Nama']
-        tamu.no_hp_tamu = request.POST['NoHP']
-        tamu.jenis_kelamin = request.POST['Kelamin']
-        tamu.perusahaan = request.POST['Institusi']
-        tamu.terakhir_datang = timezone.now()
+        # tamu.uid = request.POST['UID']
+        # tamu.tipeid = request.POST['TID']
+        # tamu.nama_tamu = request.POST['Nama']
+        # tamu.no_hp_tamu = request.POST['NoHP']
+        # tamu.jenis_kelamin = request.POST['Kelamin']
+        # tamu.perusahaan = request.POST['Institusi']
+        # tamu.terakhir_datang = timezone.now()
+        pwd = os.getcwd()
+        pwd = os.path.join(pwd, "media")
+        path = os.path.join(pwd, tamu.image.name)
+        os.remove(path)
         tamu.image = image
         tamu.save()
 
