@@ -71,10 +71,7 @@ def signin(request):
         # tamu.jenis_kelamin = request.POST['Kelamin']
         # tamu.perusahaan = request.POST['Institusi']
         # tamu.terakhir_datang = timezone.now()
-        pwd = os.getcwd()
-        pwd = os.path.join(pwd, "media")
-        path = os.path.join(pwd, tamu.image.name)
-        os.remove(path)
+        tamu.delete_image()
         tamu.image = image
         tamu.save()
 
@@ -94,8 +91,6 @@ def signin(request):
         tamu.image = image
         tamu.save()
     try:
-        suhu = request.POST['SuhuBadan']
-        suhu = suhu.replace(',','.')
         suhu = float(suhu)
     except:
         suhu = 0.0
