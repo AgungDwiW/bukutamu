@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title%}Pelaporan{%endblock%}</title>
     <meta name="description" content="Website untuk kewirausahaan mahasiswa">
-    <meta name="author" content="SI Lomba ITS">
+    <meta name="author" content="Pelaporan">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
@@ -31,8 +31,8 @@
     <link rel="stylesheet" href={% static "assets/style.css"%}>
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <link rel="shortcut icon" href={% static "assets/images/logo-100x100.png"%} type="image/x-icon">
-    <link rel="icon" href={% static "assets/images/logo-100x100.png"%} type="image/x-icon">
+    <link rel="shortcut icon" href={% static "assets/images/logo.png"%} type="image/x-icon">
+    <link rel="icon" href={% static "assets/images/logo.png"%} type="image/x-icon">
     <link rel="stylesheet" href={% static "https://use.fontawesome.com/releases/v5.8.1/css/all.css"%}
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -177,25 +177,25 @@
                 
                     <li class="nav-item">
                         <a href="Dashboard.html" class="nav-link">
-                            <i class="nav-icon fa fa-bar-chart"></i>
+                            <i class="nav-icon fa fa-file" aria-hidden="true"></i>
                             <p>
-                                Search
+                                Form Pelaporan
                             </p>
                         </a>
                     </li>
                     <li class="nav-item" >
                         <a href={%url 'pelaporan:bukutamu'%} class="nav-link">
-                            <i class="nav-icon fa fa-bar-chart"></i>
+                            <i class="nav-icon fa fa-book" aria-hidden="true"></i>
                             <p>
-                                Bukutamu
+                                Buku tamu
                             </p>
                         </a>
                     </li>
                     <li class="nav-item" >
                         <a href={%url 'pelaporan:users'%} class="nav-link">
-                            <i class="nav-icon fa fa-bar-chart"></i>
+                            <i class="nav-icon fa fa-user"></i>
                             <p>
-                                Users
+                                List tamu
                             </p>
                         </a>
                         </li>
@@ -271,12 +271,7 @@
 
 
     <footer class="main-footer" style="text-align:center;">
-        <!-- <strong>Copyright &copy; 2019 SI Lomba Mahasiswa.</strong>
-        All rights reserved. -->
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
+       
 
         <!-- Modal Logout -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
