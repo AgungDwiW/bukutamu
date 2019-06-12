@@ -2,6 +2,9 @@ from django.shortcuts import render
 from bukutamu.models import Kedatangan, Tamu
 from django.views import generic
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 @login_required
 def bukutamu(request):
     kedatangans = Kedatangan.objects.all()
@@ -13,6 +16,7 @@ def bukutamu(request):
         temp = {}
         temp['no'] = counter
         counter += 1
+        temp['id'] = tamu.id
         temp['nama'] = tamu.nama_tamu
         temp['tanggal'] = kedatangan.tanggal_keluar
         temp['alasan'] = kedatangan.alasan_kedatangan
@@ -30,12 +34,31 @@ def bukutamu(request):
 
 def index(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('bukutamu'))
+        return HttpResponseRedirect(reverse('pelaporan:bukutamu'))
     return render(request,'pelaporan/index.html') 
     
 @login_required
 def users(request):
-    pass
+    tamus = Tamu.objects.all()
+    context = {}
+    content = []
+    counter = 1
+    for tamu in tamus:
+        temp = {}
+        temp['no'] = counter
+        counter+=1
+        temp['nama'] = tamu.nama_tamu
+        temp['tanggal'] = tamu.terakhir_datang
+        temp['uid'] = tamu.uid
+        temp['kelamin'] = tamu.jenis_kelamin
+        temp['hp'] = tamu.no_hp_tamu
+        temp['status'] = "Didalam" if tamu.signed_in else "Keluar"
+        temp['perusahaan'] = tamu.perusahaan
+        temp['tipeid'] = tamu.tipeid
+        content.append(temp)
+    context ['items'] = content
+    return render(request,'pelaporan/users.html', context) 
+
 
 @login_required
 def users_detail(request, id):

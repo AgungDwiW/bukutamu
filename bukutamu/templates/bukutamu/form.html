@@ -69,7 +69,7 @@
 	          <div class="col-sm-3">
 	            <select class="form-control inputsm" name="TID" id="TID" placeholder="Tipe id"  value = {{tamu.tipeid}} {%if not flag%} readonly {%endif%}>
 	            	<option>KTP</option>
-	            	<option>SIM</option>
+	            	<option {%if tipid%}selected{%endif%}>SIM</option>
 	            </select>
 	          </div>
 	        </div>
@@ -91,7 +91,7 @@
 	          <div class="col-sm-9">  
 	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} {%if not flag%} readonly {%endif%}>
 	            	<option>Laki laki</option>
-				    <option>Perempuan</option>
+				    <option {%if kelamin%}selected{%endif%}>Perempuan</option>
 	            </select>
 	          </div>
 	        </div>

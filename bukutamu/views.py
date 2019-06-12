@@ -27,7 +27,10 @@ def form (request):
     try:
         # searching existing tamu's data
         tamu = Tamu.objects.get(uid = request.POST['UID'])
-        
+        if (tamu.jenis_kelamin == "Perempuan"):
+            formdata["kelamin"] = True
+        if (tamu.tipeid == "SIM"):
+            formdata["tipid"] = True
         formdata["flag"] = True
         if (tamu.signed_in == True):
             formdata["flag"] = False
