@@ -24,6 +24,7 @@ urlpatterns = [
     path('pelaporan/', include('pelaporan.urls')),
     path('', views.home),
 ]
+
 from django.conf import settings
 from django.conf.urls.static import static
 if settings.DEBUG:

@@ -10,10 +10,11 @@ def index(request):
         temp = {}
         temp['no'] = counter
         counter += 1
-        temp['kedatagan'] = kedatagan
+        temp['kedatagan'] = kedatangan
         temp['tamu'] = tamu
         content.append(temp)
-    content['items'] = content
-    return render(request, 'pelaporan/test.html',content)
+    contents = {}
+    contents['items'] = content
+    return render(request, 'pelaporan/test.html',contents)
 
 # Create your views here.

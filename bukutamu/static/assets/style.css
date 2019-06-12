@@ -1,0 +1,118 @@
+.column_1 {
+    float: left;
+    width: 20%;
+    padding: 5px;
+    height: 100%px; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Clear floats after the columns */
+  .row_1:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .logoutbtn{
+    width: 50%
+  }
+  
+  .dashboard a, .dashboard-dosen a{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.376) !important;
+    transition: 0.3s;
+    text-decoration: none !important;
+  }
+  
+  body.sidenav-toggled .dashboard{
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+    transition: 0.35s;
+  }
+  
+  .dashboard{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    transition: 1s;
+  }
+  
+  body.sidebar-collapse .dashboard-dosen{
+    padding-left: 20% !important;
+    padding-right: 20% !important;
+    transition: 0.5s;
+  }
+  
+  body.sidebar-open .dashboard-dosen{
+    padding-left: 14% !important;
+    padding-right: 14% !important;
+    transition: 1s;
+  }
+  
+  .dashboard-dosen{
+    padding-left: 14% !important;
+    padding-right: 14% !important;
+    transition: 1s;
+  }
+  
+  .dashboard a:hover, .dashboard-dosen a:hover{
+    background-color:#19508c !important;
+  }
+  
+  .dashboard a .bar1, .dashboard-dosen a .bar1{
+    transition: 0.3s;
+  }
+  
+  .dashboard a:hover .bar1, .dashboard-dosen a:hover .bar1{
+    width: 10rem !important;
+  }
+  
+  .dashboard a .bar2, .dashboard-dosen a .bar2{
+    transition: 0.5s;
+  }
+  
+  .dashboard a:hover .bar2, .dashboard-dosen a:hover .bar2{
+    width: 3rem !important;
+  }
+  
+  /* Dashboard Mahasiswa */
+
+  .dashboard a, .dashboard-dosen a{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.376) !important;
+    transition: 0.3s;
+    text-decoration: none !important;
+  }
+  
+  body.sidebar-collapse .dashboard-mhs{
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+    transition: 0.5s;
+  }
+  
+  body.sidebar-open .dashboard-mhs{
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    transition: 1s;
+  }
+  
+  .dashboard-mhs{
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    transition: 1s;
+  }
+  
+  .dashboard a:hover, .dashboard-mhs a:hover{
+    background-color:#19508c !important;
+  }
+  
+  .dashboard a .bar1, .dashboard-mhs a .bar1{
+    transition: 0.3s;
+  }
+  
+  .dashboard a:hover .bar1, .dashboard-mhs a:hover .bar1{
+    width: 10rem !important;
+  }
+  
+  .dashboard a .bar2, .dashboard-mhs a .bar2{
+    transition: 0.5s;
+  }
+  
+  .dashboard a:hover .bar2, .dashboard-mhs a:hover .bar2{
+    width: 3rem !important;
+  }
