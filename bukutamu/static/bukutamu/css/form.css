@@ -121,3 +121,5 @@ body {
 #cancel {
   background-color: red;
 }
+
+@media all and (min-width:1920px) { #container { width: 1850px; } }
