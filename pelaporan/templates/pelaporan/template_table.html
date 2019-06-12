@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    {% block title%}<title>SITA ITS</title>{%endblock%}
+    <title>{% block title%}Pelaporan{%endblock%}</title>
     <meta name="description" content="Website untuk kewirausahaan mahasiswa">
     <meta name="author" content="SI Lomba ITS">
     <!-- Tell the browser to be responsive to screen width -->
@@ -197,18 +197,18 @@
                         </a>
                     </li>
                     <li class="nav-item" >
-                        <a href="UploadTA.html" class="nav-link">
+                        <a href={%url 'pelaporan:bukutamu'%} class="nav-link">
                             <i class="nav-icon fa fa-bar-chart"></i>
                             <p>
-                                Upload
+                                Bukutamu
                             </p>
                         </a>
                     </li>
-                    <li>
-                        <a href="TemplateTA.html" class="nav-link">
+                    <li class="nav-item" >
+                        <a href={%url 'pelaporan:users'%} class="nav-link">
                             <i class="nav-icon fa fa-bar-chart"></i>
                             <p>
-                                Template TA
+                                Users
                             </p>
                         </a>
                         </li>
@@ -245,10 +245,39 @@
                     {%endblock%}
                     <!-- Main content -->
                     <section class="content">
-                    
                     <div class="row">
-                    <div class="col">{%block content %} {%endblock%}
-                    </div></div>
+                    <div class="col">
+                        <div class="card table-responsive" style="border-radius: 0px !important;">
+                            <div class="card-header">
+                                {%block title-table %}
+                                            
+                                {%endblock%}
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-hover"
+                                    style="font-size:10pt; text-align:center; vertical-align:middle;">
+                                    <thead>
+                                        <tr>
+                                            {%block header-table %}
+                                            
+                                            {%endblock%}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%block content-table%}
+                                            {%endblock%}
+                                        
+                                    </tbody>
+                            </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+        </div>
                     </section>
                     <!-- /.content -->
                 </div>
@@ -333,14 +362,8 @@
     <script src={% static "assets/plugins/datatables/dataTables.bootstrap4.min.js"%}></script>
     <script>
         $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
+            $('#example1').DataTable({
                 "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
             });
         });
     </script>
