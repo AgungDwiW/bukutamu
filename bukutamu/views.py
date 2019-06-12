@@ -94,12 +94,12 @@ def signin(request):
         suhu = float(suhu)
     except:
         suhu = 0.0
-
+    a = timezone.now()
     tamu.kedatangan_set.create(
-        tanggal_kedatangan = timezone.now(),
+        tanggal_kedatangan = a,
         bertemu_dengan = request.POST['Bertemu'],
         alasan_kedatangan = request.POST['Keperluan'],
-        tanggal_keluar = timezone.now(),
+        tanggal_keluar = a,
         lama_kedatangan = timezone.now() - timezone.now(),
         suhu_badan = suhu,
         terdapat_luka_terbuka = request.POST['Luka'],

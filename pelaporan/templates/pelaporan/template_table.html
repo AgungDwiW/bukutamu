@@ -40,7 +40,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href={% static "assets/plugins/datatables/dataTables.bootstrap4.min.css"%}>
+    <link rel="stylesheet" href=//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css>
     <!-- Theme style -->
     <link rel="stylesheet" href={% static "assets/dist/css/adminlte.min.css"%}>
 
@@ -305,7 +305,7 @@
                     <div class="modal-body">Tekan tombol logout untuk mengakhiri sesi anda!</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="index.html">Logout</a>
+                        <a class="btn btn-primary" href={%url 'logout' %}>Logout</a>
                     </div>
                 </div>
             </div>
@@ -358,12 +358,13 @@
     <!-- AdminLTE for demo purposes -->
     <script src={% static "assets/dist/js/demo.js"%}></script>
     <!-- DataTables -->
-    <script src={% static "assets/plugins/datatables/jquery.dataTables.min.js"%}></script>
-    <script src={% static "assets/plugins/datatables/dataTables.bootstrap4.min.js"%}></script>
+    <!-- <script src={% static "assets/plugins/datatables/jquery.dataTables.min.js"%}></script> -->
+    <!-- <script src={% static "assets/plugins/datatables/dataTables.bootstrap4.min.js"%}></script> -->
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(function () {
             $('#example1').DataTable({
-                "searching": false,
+                "searching": true,
             });
         });
     </script>

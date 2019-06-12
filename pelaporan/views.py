@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from bukutamu.models import Kedatangan, Tamu
-
+from django.views import generic
+from django.contrib.auth.decorators import login_required
+@login_required
 def bukutamu(request):
     kedatangans = Kedatangan.objects.all()
     content = []
@@ -16,8 +18,8 @@ def bukutamu(request):
         temp['alasan'] = kedatangan.alasan_kedatangan
         temp['bertemu'] = kedatangan.bertemu_dengan
         temp['keperluan'] = kedatangan.alasan_kedatangan
-        if (tamu.signed_in):
-            temp['status'] = "Masuk"
+        if (kedatangan.tanggal_keluar == kedatangan.tanggal_kedatangan):
+            temp['status'] = "Didalam"
         else:
             temp['status'] = "Keluar"
         content.append(temp)
@@ -27,9 +29,15 @@ def bukutamu(request):
     return render(request, 'pelaporan/bukutamu.html',contents)
 
 def index(request):
-    pass
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('bukutamu'))
+    return render(request,'pelaporan/index.html') 
+    
+@login_required
 def users(request):
     pass
+
+@login_required
 def users_detail(request, id):
     pass
 # Create your views here.

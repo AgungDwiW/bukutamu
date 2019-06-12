@@ -15,10 +15,12 @@ class Tamu(models.Model):
     terakhir_datang = models.DateTimeField('terakhir_datang')
     image = models.ImageField(upload_to= "static/bukutamu/camera/",null = True)
     uid.default = '000000000000'
-    def remove_image(self):
+    def delete_image(self):
         path = os.path.join(os.path.join(os.getcwd(), "media"), self.image.name)
-        os.remove(path)
-    
+        try:
+            os.remove(path)
+        except:
+            pass
     def checkme(self):
         returned = [self.nama_tamu, self.terakhir_datang]
         return returned
