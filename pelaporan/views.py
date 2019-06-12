@@ -28,4 +28,8 @@ def bukutamu(request):
 
 def index(request):
     pass
+def users(request):
+    pass
+def users_detail(request, id):
+    pass
 # Create your views here.

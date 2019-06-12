@@ -6,12 +6,15 @@ from .models import Kedatangan
 
 # Register your models here.
 
-
-class kedatangan(admin.StackedInline):
+"""
+class kedatangans(admin.StackedInline):
     model = Kedatangan
-    extra = 1
+    extra = 3
 
 class TamuAdmin(admin.ModelAdmin):
-    inlines = [kedatangan]
+    inlines = [kedatangans]
 
 admin.site.register(TamuAdmin)
+"""
+admin.site.register(Tamu)
+admin.site.register(Kedatangan)
