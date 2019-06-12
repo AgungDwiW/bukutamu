@@ -1,3 +1,4 @@
+
 <head>
     {% load static %}
     <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" id="bootstrap-css">
@@ -11,8 +12,8 @@
 
 </head>
 
-<body style="font-size: 15px">
- <div class="wrapper"> 
+<body background="{% static "indexbackground.jpg" %}" style="font-size: 15px" >
+ <div class="wrapper" > 
   <div id="formContent">
    <div class="row vertical-align">
     <div class="col-sm-6" >
@@ -147,13 +148,21 @@
 	            <input type="text" class="form-control input-sm " name="Sakit" id="Sakit"  placeholder="Sehat" {%if not flag%} readonly {%endif%} required value = {{kedatangan.sakit}}  >
 	          </div>
 	        </div>
-	        <div class="form-group row " >
+	        <div class="form-group row"  >
   			<input type="hidden" id = "Image" name = "Image">
-  			{%if flag%}
-  			<input type="submit" name="submit" id = "submit" class="col-sm-11 center">
-  			{%else%}
-  			<input type="submit" name="submit" id = "submit" class="col-sm-11 center" value = "logout">
-  			{%endif%}	
+  				<div class="col-sm-4"> 
+		  			<a href={%url 'bukutamu:index'%}><input type="button" name="cancel" id = "cancel" class="col-sm-11 center" value="cancel"></a>
+	  			</div>
+  				{%if flag%}
+	  			<div class="col-sm-8"> 
+		  			<input type="submit" name="submit" id = "submit" class="col-sm-11 ">
+	  			</div>
+	  			{%else%}
+	  			<div class="col-sm-6"> 
+	  				<input id="cancel " type="submit" name="submit" id = "submit" class="col-sm-11 center" value = "logout">
+	  			</div>
+	  			{%endif%}
+	  			
   			</div>
   		</form>
     </div>

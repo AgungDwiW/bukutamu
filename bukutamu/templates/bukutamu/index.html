@@ -10,7 +10,7 @@
     <title>Bukutamu</title>
 </head>
 
-<body>
+<body background="{% static "indexbackground.jpg" %}">
     <div class="wrapper ">
       <div id="formContent">
         <!-- Tabs Titles -->
@@ -19,12 +19,11 @@
         <br>
         <!-- Icon -->
         
-    
         <!-- Login Form -->
         <form method="POST" action="{%url 'bukutamu:form'%}">
 			{% csrf_token %}
-          <input type="text" id="UID" class="" name="UID" placeholder="ID" required>
-          <input type="submit" class="" value="Log In">
+          <input type="text" id="UID" class="form-control" name="UID" placeholder="ID" aria-label="Search" required>
+          <input style="margin-top: 20px" type="submit" class="" value="Log In">
         </form>
 
     
