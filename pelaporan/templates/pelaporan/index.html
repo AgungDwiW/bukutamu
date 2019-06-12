@@ -6,44 +6,52 @@
     <link href="{% static "bukutamu/css/index.css" %}" rel="stylesheet">
     <script src="{% static "jquery.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <!------ Include the above in your HEAD tag ---------->
+ 
     <title>Bukutamu</title>
 </head>
 
-<body background="{% static "indexbackground.jpg" %}">
+<body background="{% static "indexbackground.jpg" %}" >
     <div class="wrapper ">
       <div id="formContent">
-        <!-- Tabs Titles -->
-        <br>
+        <div class=" ">
+          <!-- Tabs Titles -->
+          <br>
 
-        <br>
-        <!-- Icon -->
-        
-        <!-- Login Form -->
-        <form method="POST" action="{% url 'login' %}">
-      {% csrf_token %}
-          <input type="text" id="id_username" class="form-control" placeholder="ID" aria-label="Search" name = "username" required>
-          <input type="password" name = "password" id="id_password" class="form-control pass" name="UID" placeholder="Password" aria-label="Search" required>
-          <input type="hidden" name="next" value="{{ next }}" />
-           <!-- {{form.username}}
-           {{form.password}} -->
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <p>Please login to see this page.</p>
+          <br>
+          <!-- Icon -->
+          
+          <!-- Login Form -->
+          <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+          <div style="margin: auto;" class="">
+            <input type="text" id="id_username" class="form-control" placeholder="ID" aria-label="Search" name = "username" required>
+          
+          </div>
+          <br>
+          <div style="margin: auto;"class="col-sm-11">
+            <input type="password" name = "password" id="id_password" class="form-control pass" name="Password" placeholder="Password" aria-label="Search" style=" text-align: center ; background-color: #f6f6f6; border: none; " required>
+          </div>
+          <br>
+            <input type="hidden" name="next" value="{{ next }}" />
+             <!-- {{form.username}}
+             {{form.password}} -->
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
-{% endif %}
 
-          <input style="margin-top: 20px" type="submit" class="" value="Log In">
-        </form>
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
 
-    
+            <input style="margin-top: 20px" type="submit" class="" value="Log In">
+          </form>
+
+        </div>
       </div>
     </div>
 </body>

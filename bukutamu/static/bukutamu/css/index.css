@@ -129,7 +129,8 @@ input[type=text] {
   border-radius: 5px 5px 5px 5px;
 }
 
-#pass {
+
+#pass input[type=password]{
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
