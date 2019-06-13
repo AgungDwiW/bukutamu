@@ -57,18 +57,25 @@ def users(request):
         temp['tipeid'] = tamu.tipeid
         content.append(temp)
     context ['items'] = content
+
     return render(request,'pelaporan/users.html', context) 
 
 
 @login_required
-def users_detail(request, id):
+def users_detail(request, pk):
     try:
-        tamu = tamu.objects.get(pk=id)
-    except Book.DoesNotExist:
-        raise Http404('Book does not exist')
+        pk = int(pk)
+        tamu = Tamu.objects.get(uid=pk)
+    except :
+        raise Http404()
+    context = {}
     context['tamu'] = tamu
-    kedatangans = Kedatangan.objects.get(tamu_id = id)
-    context
+    kedatangans = Kedatangan.objects.filter(tamu_id = tamu.id)
+    kedatangans = kedatangans.order_by('-id')
+    kedatangans = list(kedatangans)
+    kedatangans = kedatangans[:-3]
+    context['kedatangan'] = kedatangans
+    return HttpResponse(context)
     return render(request,'pelaporan/users_detail.html', context) 
 
 @login_required

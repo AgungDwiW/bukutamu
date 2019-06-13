@@ -18,7 +18,8 @@ List tamu
 
 {%block content-table%}
 {% for item in items%}
-<tr>
+
+<tr class='clickable-row' data-href=/pelaporan/users/{{item.uid}}>
  <td style="vertical-align:middle;">{{item.no}}</td>
  <td style="text-align:left;">{{item.nama}}</td>
  <td style="text-align:left;">{{item.perusahaan}}</td>
@@ -26,6 +27,8 @@ List tamu
  <td style="text-align:left;">{{item.tipeid}}</td>
  <td style="text-align:left;">{{item.tanggal}}</td>
  <td style="text-align:left;">{{item.status}}</td>
+
  </tr>
+
 {%endfor%}
 {%endblock%}
