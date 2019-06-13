@@ -69,6 +69,7 @@
 	          <div class="col-sm-3">
 	            <select class="form-control inputsm" name="TID" id="TID" placeholder="Tipe id"  value = {{tamu.tipeid}} {%if not flag%} readonly {%endif%}>
 	            	<option>KTP</option>
+	            	<option {%if tipid%}selected{%endif%}>Kartu Pegawai</option>
 	            	<option {%if tipid%}selected{%endif%}>SIM</option>
 	            </select>
 	          </div>
