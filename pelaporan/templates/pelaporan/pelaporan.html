@@ -1,1 +1,103 @@
 {%extends "pelaporan/template.html"%}
+{%block title%} Form Laporan {%endblock%}
+
+{% block content %}
+<div class="wrapper" > 
+  <div id="formContent">
+   <div class="row col-sm-12" style="margin: auto;">
+   
+    <div class="" >
+        <form method = "POST" action =  class = "text-left"  onsubmit="validateForm()">
+        
+  			{% csrf_token %}
+  			<input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" 
+  			 {%if not flag%} readonly {%endif%}><br>
+	        <!--  -->
+	        <div class="form-group row"> <!-- nama -->
+	          <label class="control-label col-sm-6" for="Nama">Nama:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" {%if not flag%} readonly {%endif%} required  {%if tamu.nama_tamu%} readonly value = {{tamu.nama_tamu}} {%endif%}  >
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- no HP -->
+	          <label class="control-label col-sm-6" for="NoHP">Nomor HP:</label>
+	          <div class="col-sm-9">  
+	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row"><!-- Jenis kelamin -->
+	          <label class="control-label col-sm-6" for="kelamin">Jenis Kelamin:</label>
+	          <div class="col-sm-9">  
+	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} {%if not flag%} readonly {%endif%}>
+	            	<option>Laki laki</option>
+				    <option {%if kelamin%}selected{%endif%}>Perempuan</option>
+	            </select>
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- Institusi  -->
+	          <label class="control-label col-sm-6" for="Institusi">Institusi:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" required {% if tamu.perusahaan%} readonly value = {{tamu.perusahaan}} {%endif%} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- SUhu badan -->
+	          <label class="control-label col-sm-6" for="SuhuBadan">Suhu Badan:</label>
+	          <div class="col-sm-9">  
+	            <input type="number" step="any" class="form-control inputsm" name="SuhuBadan" id="SuhuBadan" placeholder="xx,x" required value = {{kedatangan.suhu_badan}} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- BErtemu dengan -->
+	          <label class="control-label col-sm-6" for="Bertemu">Bertemu dengan:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Bertemu" id="Bertemu"
+	            placeholder="Bapak/Ibu" required value = {{kedatangan.bertemu_dengan}} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- Keperluan -->
+	          <label class="control-label col-sm-6" for="Keperluan">Keperluan:</label>
+	          <div class="col-sm-9">  
+	            <input type="text" class="form-control inputsm" name="Keperluan" id="Keperluan" placeholder="Untuk" required value = {{kedatangan.alasan_kedatangan}} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row ">
+	          <label class="control-label col-sm-5" for="Luka">Terdapat Luka terbuka:</label>
+	      	<!-- </div>
+	      	<div class="form-group row"> -->
+	          	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="Luka" id="Luka" {% if kedatangan.terdapat_luka_terbuka%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} {%if not flag%}  disabled {%endif%} value = "1"> Ya
+	        	</label>
+	        	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="Luka"{%if not flag%}  disabled {%endif%} {% if not  kedatangan.terdapat_luka_terbuka%} checked=true {%endif%} id = Luka value="0"> Tidak
+	        	</label>
+	        </div>
+	        <div class="form-group row">
+	          <label class="control-label col-sm-5" for="sakit"> Sakit dalam 3 hari terakhir:</label>
+	          	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="sakit" id="sakit_radio_y" {% if  sakit%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} onchange="sakit_aktive()"> Ya
+	        	</label>
+	        	<label class="radio-inline col-sm-2">
+	            <input type="radio"  name="sakit" id="sakit_radio_n" value = "Tidak" {% if not sakit%} checked=true {%endif%}{%if not flag%} disabled {%endif%}  onchange="sakit_aktive()"> Tidak
+	        	</label>
+
+	        </div>
+	        <div class="form-group row " >
+	        <label class="control-label col-sm-6" for="sakit"> Jenis sakit :</label>
+	          <div class="col-sm-9">  
+	          	
+	            <input type="text" class="form-control input-sm " name="Sakit" id="Sakit"  placeholder="Sehat" {%if not flag%} readonly {%endif%} required value = {{kedatangan.sakit}}  >
+	          </div>
+	        </div>
+	        <div class="form-group row"  >
+  			<input type="hidden" id = "Image" name = "Image">
+  				
+	  			<div class="col-sm-6"> 
+		  			<input type="submit" name="submit" id = "submit" class="col-sm-11 ">
+	  			</div>
+	  			
+	  			
+  			</div>
+  		</form>
+    </div>
+  </div>
+  </div>
+{%endblock%}
