@@ -2,7 +2,7 @@ from django.shortcuts import render
 from bukutamu.models import Kedatangan, Tamu
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 
 @login_required
@@ -62,5 +62,16 @@ def users(request):
 
 @login_required
 def users_detail(request, id):
-    pass
+    try:
+        tamu = tamu.objects.get(pk=id)
+    except Book.DoesNotExist:
+        raise Http404('Book does not exist')
+    context['tamu'] = tamu
+    kedatangans = Kedatangan.objects.get(tamu_id = id)
+    context
+    return render(request,'pelaporan/users_detail.html', context) 
+
+@login_required
+def lapor(request):
+    return render(request, 'pelaporan/pelaporan.html')
 # Create your views here.

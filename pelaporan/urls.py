@@ -26,5 +26,6 @@ urlpatterns = [
     path('bukutamu', views.bukutamu, name='bukutamu'),
     path('users', views.users, name='users'),
     path('users/<int:id>', views.users_detail, name='users_detail'),
+    path('lapor', views.lapor, name = 'lapor')
     
 ]
