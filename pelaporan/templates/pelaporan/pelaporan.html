@@ -7,8 +7,9 @@
     <!-- /.card-header -->
     <div class="card-body">
             <!-- Grid -->
-        <form id="msform" style="height:auto; width:auto;" method="post" action="Dashboard.html" enctype="multipart/form-data">
+        <form id="msform" style="height:auto; width:auto;" method="post" action={% url 'pelaporan:submit'%} >
         <!-- fieldsets -->
+        	{% csrf_token %}
             <fieldset>
                 
                 <div style="margin:auto;">
@@ -23,16 +24,16 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Nama Pelapor:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="nama" class = "form-control inputsm" placeholder="Nama Pelapor"></div>
+                            <input type="text" name="nama_pelapor" id = "nama_pelapor" class = "form-control inputsm" placeholder="Nama Pelapor"></div>
                     </div>
                         
                     <div class="form-group row" style="padding-bottom:1rem;"><!-- UID -->
                       <label class="control-label col-sm-2" for="UID">UID Pelapor:</label>
                       <div class="col-sm-7">  
-                        <input type="text" class="form-control inputsm" name="UIDP" id="UIDP" placeholder="UID Pelapor" value =   > 
+                        <input type="text" class="form-control inputsm" name="uid_pelapor" id="uid_pelapor" placeholder="UID Pelapor" value =   > 
                       </div>
                       <div class="col-sm-3" style="padding-bottom:1rem;">
-                        <select class="form-control inputsm" name="TIDP" id="TIDP" placeholder="Tipe id"  value = {{tamu.tipeid}} {%if not flag%} readonly {%endif%}>
+                        <select class="form-control inputsm" name="tid_pelapor" id="tid_pelapor" placeholder="Tipe id"  value = {{tamu.tipeid}} {%if not flag%} readonly {%endif%}>
                             <option>KTP</option>
                             <option selected>Kartu Pegawai</option>
                             <option >SIM</option>
@@ -42,7 +43,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Tanggalpelanggaran">Tanggal Pelanggaran:</label>
                         <div class="col-sm-10">
-                            <input type="date" name="Tgllanggar" class = "form-control inputsm"></div>
+                            <input type="date" name="tgl_langgar" class = "form-control inputsm"></div>
                     </div>
                     
                     <hr style="display: block;" size="5">
@@ -53,10 +54,10 @@
                     <div class="form-group row" style="padding-bottom:1rem;"><!-- UID -->
                       <label class="control-label col-sm-2" for="UID">UID :</label>
                       <div class="col-sm-7">  
-                        <input type="text" class="form-control inputsm" name="UIDP" id="uid_pelaku" readonly placeholder="UID Pelaku" value =   > 
+                        <input type="text" class="form-control inputsm" name="uid_pelaku" id="uid_pelaku" readonly placeholder="UID Pelaku" value =   > 
                       </div>
                       <div class="col-sm-3">
-                        <select class="form-control inputsm" name="TID" id="tid_pelaku" placeholder="Tipe id" disabled  value = {{tamu.tipeid}}>
+                        <select class="form-control inputsm" name="tid_pelaku" id="tid_pelaku" placeholder="Tipe id" disabled  value = {{tamu.tipeid}}>
                             <option>KTP</option>
                             <option >Kartu Pegawai</option>
                             <option >SIM</option>
@@ -66,7 +67,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Nama Pelapor:</label>
                         <div class="col-sm-10">
-                            <select name="nama-pelanggar" onchange="get_tamu()"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar">
+                            <select name="nama_pelaku" onchange="get_tamu()"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar" name="nama_pelaku">
                             	<option>
                             		
                             	</option>
@@ -80,17 +81,17 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Institusi:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Institusi-pelanggar" id = "institusi" readonly class = "form-control inputsm" placeholder="Institusi Pelanggar"></div>
+                            <input type="text" name="Institusi_pelaku" id = "institusi" readonly class = "form-control inputsm" placeholder="Institusi Pelanggar"></div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">No. Handphone:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="nama-pelanggar" readonly  id = "no_hp" class = "form-control inputsm" placeholder="No. Handphone pelanggar"></div>
+                            <input type="text" name="hp_pelaku" readonly  id = "no_hp" class = "form-control inputsm" placeholder="No. Handphone pelanggar"></div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Tipe Aktivitas di 12 Basic:</label>
                         <div class="col-sm-10">
-                            <select class="form-control inputsm" name="TID" id="aktivitas_12" placeholder="Tipe id"  value = {{tamu.tipeid}}>
+                            <select class="form-control inputsm" name="aktivitas_12" id="aktivitas_12" placeholder="Tipe id"  value = {{tamu.tipeid}}>
                             <option>Pilih</option>
                             <option >Work at Height</option>
                             <option >Chemical Product</option>
@@ -182,7 +183,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Positif/Negatif</label>
                         <div class="col-sm-10">
-                            <select class="form-control inputsm" name="TID" id="positivity" placeholder="Tipe id"  value = {{tamu.tipeid}}>
+                            <select class="form-control inputsm" name="positivity" id="positivity" placeholder="Tipe id"  value = {{tamu.tipeid}}>
                             <option selected value="0">Negatif</option>
                             <option value="1">Positif</option>
 
@@ -209,6 +210,7 @@
                     <div class="col-sm-12 center"> 
                         <input type="submit" name="submit" id = "submit" class="col-sm-12">
                     </div>
+        	}
 
                     
 
@@ -252,4 +254,7 @@ function get_tamu(){
 	
 
 };
+$('form input').on('keypress', function(e) {
+    return e.which !== 13;
+});
 {%endblock%}

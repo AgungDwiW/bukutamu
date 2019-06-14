@@ -27,6 +27,7 @@ urlpatterns = [
     path('users', views.users, name='users'),
     path('users/<int:pk>', views.users_detail, name='users_detail'),
     path('ajax/<int:uid>', views.get_tamu, name='ajax_users_detail'),
-    path('lapor', views.lapor, name = 'lapor')
-    
+    path('lapor', views.lapor, name = 'lapor'),
+    path('submit', views.submit, name = 'submit'),
+    path('listlapor', views.list_pelaporan, name = 'listlapor'),
 ]

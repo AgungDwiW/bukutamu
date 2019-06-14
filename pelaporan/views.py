@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.http import JsonResponse
+from .models import Pelaporan
+from bukutamu.models import Tamu
+from django.utils import timezone
 import json
 @login_required
 def bukutamu(request):
@@ -105,3 +108,49 @@ def get_tamu(request, uid):
     respons['hp'] = tamu.no_hp_tamu
     respons['perusahaan'] = tamu.perusahaan
     return JsonResponse(respons)
+
+@login_required
+def submit(request):
+    tamu = Tamu.objects.get(uid = request.POST['uid_pelaku'])
+
+    tamu.pelaporan_set.create(
+        nama_pelapor = request.POST['nama_pelapor'],
+        uid_pelapor = request.POST['uid_pelapor'],
+        tid_pelapor = request.POST['tid_pelapor'],
+        tanggal_pelanggaran = request.POST['tgl_langgar'],
+        tanggal_pelaporan = timezone.now(),
+        tipe_aktivitas_12 = request.POST['aktivitas_12'],
+        sub_kategori = request.POST['Subkategori'],
+        positif =request.POST['positivity'],
+        action_plan1 = request.POST['AP1'],
+        action_plan2 = request.POST['AP2'],
+        keterangan = request.POST['keterangan'],
+    )
+    return HttpResponseRedirect(reverse('pelaporan:listlapor'))
+
+@login_required
+def list_pelaporan(request):
+    pelaporans = Pelaporan.objects.all()
+    context = {}
+    content = []
+    counter = 1
+    for pelaporan in pelaporans:
+        temp = {}
+        tamu = Tamu.objects.get(id = pelaporan.pelaku_id)
+        temp['no'] = counter
+        counter+=1
+        temp['nama_pelapor'] = pelaporan.nama_pelapor
+        temp['tanggal'] = pelaporan.tanggal_pelanggaran.date()
+        temp['uid_pelaku'] = tamu.uid
+        temp['nama_pelaku'] = tamu.nama_tamu
+        temp['12'] = pelaporan.tipe_aktivitas_12
+        temp['subkategori'] = pelaporan.sub_kategori
+        temp['positivity'] = "positif" if pelaporan.positif  else "negative"
+        temp['ap1'] = pelaporan.action_plan1
+        temp['ap2'] = pelaporan.action_plan2
+        temp['keterangan'] = pelaporan.keterangan
+        content.append(temp)
+    context ['items'] = content
+
+    return render(request,'pelaporan/listpelaporan.html', context) 
+

@@ -4,7 +4,7 @@ from bukutamu.models import Tamu
 
 # Create your models here.
 
-class pelaporan (models.Model):
+class Pelaporan (models.Model):
 	nama_pelapor = models.CharField(max_length=(100))
 	uid_pelapor = models.CharField(max_length=(100))
 	tid_pelapor = models.CharField(max_length=(100))
@@ -16,3 +16,4 @@ class pelaporan (models.Model):
 	positif = models.BooleanField()
 	action_plan1 = models.CharField(max_length=(100))
 	action_plan2 = models.CharField(max_length=(100))
+	keterangan = models.CharField(max_length=(100))
