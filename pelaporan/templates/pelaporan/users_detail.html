@@ -1,114 +1,88 @@
-{%extends pelaporan/template.html%}
+{%extends "pelaporan/template.html"%}
 
+{%block head%}
+    {% load static %}
+    <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
+    <!------ Include the above in your HEAD tag ---------->
+{%endblock%}
 
 {%block content%}
-<div class="card table-responsive" style="border-radius: 0px !important;">
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                    <!-- Grid -->
-                                <form id="msform" style="height:auto; width:auto;" method="post" action="Dashboard.html" enctype="multipart/form-data">
-                                <!-- fieldsets -->
-                                    <fieldset>
-                                        
-                                        <div style="margin:auto;">
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Nama Mahasiswa:
-                                                </div>
-                                                <div class="col-sm">
-                                                    Budi budiman
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Dosen pembimbing 1:
-                                                </div>
-                                                <div class="col-sm">
-                                                    Tono Tonoman
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Dosen pembimbing 2:
-                                                </div>
-                                                <div class="col-sm">
-                                                    Namey Namename
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Rumpun mata kuliah:
-                                                </div>
-                                                <div class="col-sm">
-                                                    Informatika
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Judul TA
-                                                </div>
-                                                <div class="col-sm">
-                                                    Judul
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    Keyword:
-                                                </div>
-                                                <div class="col-sm">
-                                                    scheduling, optimasi
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div>
-                                            <div class="row" style="padding-bottom:1rem;">
-                                                <div class="col-sm-2" style="padding-top:5px; text-align:left;">
-                                                    File TA
-                                                </div>
-                                                <div class="col-sm">
-                                                    <a href="#">download</a>
-                                                </div>
-                                                <!-- <div class="col-3">
-                                                    <span class="error_form" id="sumbercode_error">
-                                                    </span>
-                                                </div> -->
-                                            </div><br>
-                                            <div style="text-align:left;">
-                                                
-                        Abstraksi:
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla ex id lacus tempor semper. Nam quis nunc ac arcu congue faucibus sed id felis. Mauris justo nisi, finibus eget tincidunt nec, dapibus ac sapien. Aliquam vitae maximus tellus. In et ante ipsum. Donec placerat accumsan varius. In laoreet, tellus nec sagittis semper, orci enim viverra est, tristique aliquet erat augue id nisl. Aenean pellentesque sapien at magna aliquam sodales. Proin pellentesque augue dui, et molestie ipsum convallis vehicula. Vestibulum id tellus nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla mauris nunc, hendrerit in tincidunt eu, suscipit nec nisi.
+<div class="row">
+    <div class="row vertical-align">
+        <div class="col-sm-6" >
+            <img src = "{{tamu.image.url}}" width=80% height=100% ></img>
+            
+            
+        </div>
+        <div class="col-sm-6 v-divider">
+            
+              <form action = class = "text-left"  onsubmit="validateForm()">
+            
+                <input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" 
+                 readonly><br>
+                <div class="form-group row"><!-- UID -->
+                  <label class="control-label col-sm-3" for="UID">UID:</label>
+                  <div class="col-sm-6">  
+                    <input type="text" class="form-control inputsm" name="UID" id="UID" placeholder="UID" value = {{tamu.uid}} readonly > 
+                  </div>
+                  <div class="col-sm-3">
+                    <input class="form-control inputsm" name="TID" id="TID" placeholder="Tipe id"  value = {{tamu.tipeid}} readonly>
+                        
+                  </div>
+                </div>
 
-                        Nulla eleifend finibus justo quis auctor. Nullam tellus enim, pharetra pharetra felis eu, imperdiet laoreet lorem. Nullam vulputate, sem id malesuada accumsan, metus massa cursus diam, in venenatis diam eros ac est. Ut in felis tempor, fermentum libero in, lobortis augue. Etiam ac congue justo. Duis vulputate vitae mi a dictum. Aliquam sit amet dui non mi laoreet posuere eget non tellus. Morbi imperdiet maximus magna, et facilisis magna feugiat in.
-                                            
-                                            </div>
-                                            
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
+                <div class="form-group row"> <!-- nama -->
+                  <label class="control-label col-sm-3" for="Nama">Nama:</label>
+                  <div class="col-sm-9">  
+                    <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" readonly required  {%if tamu.nama_tamu%} readonly value = {{tamu.nama_tamu}} {%endif%}  >
+                  </div>
+                </div>
+                <div class="form-group row"> <!-- no HP -->
+                  <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
+                  <div class="col-sm-9">  
+                    <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} readonly>
+                  </div>
+                </div>
+                <div class="form-group row"><!-- Jenis kelamin -->
+                  <label class="control-label col-sm-3" for="kelamin">Jenis Kelamin:</label>
+                  <div class="col-sm-9">  
+                    <input class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} readonly>
+                  </div>
+                </div>
+                <div class="form-group row"> <!-- Institusi  -->
+                  <label class="control-label col-sm-3" for="Institusi">Institusi:</label>
+                  <div class="col-sm-9">  
+                    <input type="text" class="form-control inputsm" name="Institusi" id="Institusi" placeholder="Institusi" required {% if tamu.perusahaan%} readonly value = {{tamu.perusahaan}} {%endif%} readonly>
+                  </div>
+                </div>
+                
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+        <div class="table-responsive col-sm-12">
+          <table class="table ">
+            <thead>
+              <tr >
+                <th class="w-25">Tanggal</th>
+                <th class="w-25">Bertemu dengan</th>
+                <th class="w-50">Keperluan</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%for item in history%}
+              <tr >
+                <td>{{item.tanggal_keluar}}</td>
+                <td>{{item.bertemu_dengan}}</td>
+                <td>{{item.alasan_kedatangan }}</td>
+              </tr>
+            {%endfor%}
+            </tbody>
+          </table>
+        </div>
+</div>
+
 {%endblock%}

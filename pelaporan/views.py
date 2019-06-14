@@ -79,7 +79,7 @@ def users_detail(request, pk):
     kedatangans = list(kedatangans)
     kedatangans = kedatangans[:-3]
     context['kedatangan'] = kedatangans
-    return HttpResponse(context)
+    # return HttpResponse(context)
     return render(request,'pelaporan/users_detail.html', context) 
 
 @login_required

@@ -130,6 +130,10 @@
             }
         }
     </style>
+    {%block head%}
+
+    {%endblock%}
+    
     {%block header %}
    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
         <!-- Left navbar links -->
@@ -155,7 +159,7 @@
             </li>
         </ul>
     </nav>
-  {%endblock%}
+    {%endblock%}
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -230,7 +234,10 @@
                     <section class="content">
                     
                     <div class="row">
-                    <div class="col">{%block content %} {%endblock%}
+                    <div class="col">
+                    {%block content %} 
+
+                    {%endblock%}
                     </div></div>
                     </section>
                     <!-- /.content -->
