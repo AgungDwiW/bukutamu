@@ -26,6 +26,7 @@ urlpatterns = [
     path('bukutamu', views.bukutamu, name='bukutamu'),
     path('users', views.users, name='users'),
     path('users/<int:pk>', views.users_detail, name='users_detail'),
+    path('ajax/<int:uid>', views.get_tamu, name='ajax_users_detail'),
     path('lapor', views.lapor, name = 'lapor')
     
 ]

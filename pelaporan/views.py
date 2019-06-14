@@ -4,7 +4,8 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
-
+from django.http import JsonResponse
+import json
 @login_required
 def bukutamu(request):
     kedatangans = Kedatangan.objects.all()
@@ -80,5 +81,27 @@ def users_detail(request, pk):
 
 @login_required
 def lapor(request):
-    return render(request, 'pelaporan/pelaporan.html')
+    context = {}
+    items = []
+    tamus = Tamu.objects.all()
+    for tamu in tamus:
+        temp =  {}
+        temp['nama'] = tamu.nama_tamu
+        temp['uid'] = tamu.uid
+        temp['tipeid'] = tamu.tipeid
+        temp['institusi'] = tamu.perusahaan
+        temp['hp'] = tamu.no_hp_tamu
+        items.append(temp)
+    context['items'] =  tamus
+    context['json'] = json.dumps(items)
+    return render(request, 'pelaporan/pelaporan.html', context)
 # Create your views here.
+
+@login_required
+def get_tamu(request, uid):
+    tamu = Tamu.objects.get(uid=uid)
+    respons = {}
+    respons['nama'] = tamu.nama_tamu
+    respons['hp'] = tamu.no_hp_tamu
+    respons['perusahaan'] = tamu.perusahaan
+    return JsonResponse(respons)

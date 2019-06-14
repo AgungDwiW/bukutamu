@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'e_bukutamu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bukutamudb',
+        'NAME': 'bukutamu',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
