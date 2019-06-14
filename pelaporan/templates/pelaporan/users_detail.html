@@ -7,10 +7,10 @@
 {%endblock%}
 
 {%block content%}
-<div class="row">
+<div style="margin: auto;">
     <div class="row vertical-align">
-        <div class="col-sm-6" >
-            <img src = "{{tamu.image.url}}" width=80% height=100% ></img>
+        <div class="col-sm-6" style="margin: auto" >
+            <img src = "{{tamu.image.url}}" width=80%  ></img>
             
             
         </div>
@@ -18,8 +18,7 @@
             
               <form action = class = "text-left"  onsubmit="validateForm()">
             
-                <input type="hidden" name="image_location" id="image_location" value="/images/bleh.jpg" 
-                 readonly><br>
+
                 <div class="form-group row"><!-- UID -->
                   <label class="control-label col-sm-3" for="UID">UID:</label>
                   <div class="col-sm-6">  
@@ -30,25 +29,36 @@
                         
                   </div>
                 </div>
-
+                
+                <br>
+                
                 <div class="form-group row"> <!-- nama -->
                   <label class="control-label col-sm-3" for="Nama">Nama:</label>
                   <div class="col-sm-9">  
                     <input type="text" class="form-control inputsm" name="Nama" id="Nama"  placeholder="Nama" readonly required  {%if tamu.nama_tamu%} readonly value = {{tamu.nama_tamu}} {%endif%}  >
                   </div>
                 </div>
+                
+                <br>
+
                 <div class="form-group row"> <!-- no HP -->
                   <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
                   <div class="col-sm-9">  
                     <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} readonly>
                   </div>
                 </div>
+                
+                <br>
+
                 <div class="form-group row"><!-- Jenis kelamin -->
                   <label class="control-label col-sm-3" for="kelamin">Jenis Kelamin:</label>
                   <div class="col-sm-9">  
                     <input class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} readonly>
                   </div>
                 </div>
+                
+                <br>
+
                 <div class="form-group row"> <!-- Institusi  -->
                   <label class="control-label col-sm-3" for="Institusi">Institusi:</label>
                   <div class="col-sm-9">  
@@ -56,33 +66,68 @@
                   </div>
                 </div>
                 
-                </div>
+                
             </form>
         </div>
     </div>
 </div>
-
-<div class="row">
-        <div class="table-responsive col-sm-12">
-          <table class="table ">
-            <thead>
-              <tr >
-                <th class="w-25">Tanggal</th>
-                <th class="w-25">Bertemu dengan</th>
-                <th class="w-50">Keperluan</th>
-              </tr>
-            </thead>
-            <tbody>
-            {%for item in history%}
-              <tr >
-                <td>{{item.tanggal_keluar}}</td>
-                <td>{{item.bertemu_dengan}}</td>
-                <td>{{item.alasan_kedatangan }}</td>
-              </tr>
-            {%endfor%}
-            </tbody>
-          </table>
-        </div>
+<div>
+    <div class="row">
+            <div class="table-responsive col-sm-12">
+              <table class="table ">
+                <thead>
+                  <tr >
+                    <th class="w-25">Tanggal</th>
+                     <th class="w-25">Bertemu dengan</th>
+                    <th class="w-50">Keperluan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {%for item in history%}
+                  <tr >
+                    <td>{{item.tanggal_keluar}}</td>
+                    <td>{{item.bertemu_dengan}}</td>
+                    <td>{{item.alasan_kedatangan }}</td>
+                  </tr>
+                {%endfor%}
+                </tbody>
+              </table>
+            </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+            <div class="table-responsive col-sm-12">
+              <table class="table ">
+                <thead>
+                  <tr >
+                    <th style="min-width:5%;">No.</th>
+                    <th style="min-width:5%;">Tanggal Pelanggaran</th>
+                    <th style="min-width:8%;">12 Basic</th>
+                    <th style="min-width:7%;">Sub Kategori</th>
+                    <th style="min-width:5%;">+/-</th>
+                    <th style="min-width:10%; max-width: 15%">Action Plan 1</th>
+                    <th style="min-width:10%; max-width: 15%">Action Plan 2</th>
+                    <th style="min-width:15%; max-width: 25%">Keterangan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for item in items%}
+                <tr>
+                    <td style="vertical-align:middle;">{{item.no}}</td>
+                    <td style="vertical-align:middle;">{{item.tanggal}}</td>
+                    <td style="vertical-align:middle;">{{item.12}}</td>
+                    <td style="vertical-align:middle;">{{item.subkategori}}</td>
+                    <td style="vertical-align:middle;">{{item.positivity}}</td>
+                    <td style="vertical-align:middle;">{{item.ap1}}</td>
+                    <td style="vertical-align:middle;">{{item.ap2}}</td>
+                    <td style="vertical-align:middle;">{{item.keterangan}}</td>
+                </tr>
+                {%endfor%}
+                </tbody>
+              </table>
+            </div>
+    </div>
 </div>
 
 {%endblock%}
