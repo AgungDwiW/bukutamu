@@ -1,0 +1,34 @@
+{% extends "pelaporan/template_table.html" %}
+{%block title%} Bukutamu {%endblock%}
+{% block content %}
+
+
+{% endblock %}
+
+{%block title-table %}
+Bukutamu                                            
+{%endblock%}
+
+{%block header-table%}
+
+<th style="min-width:5%;">No.</th>
+<th style="min-width:5%; max-width: 10%">Nama Pelapor</th>
+<th style="min-width:5%;">Tanggal Pelanggaran</th>
+<th style="min-width:5%;">UID Pelanggar</th>
+<th style="min-width:5%; max-width: 10%">Nama Pelanggar</th>
+<th style="min-width:8%;">12 Basic</th>
+<th style="min-width:7%;">Sub Kategori</th>
+<th style="min-width:5%;">+/-</th>
+<th style="min-width:5%; max-width: 15%">Action Plan 1</th>
+<th style="min-width:5%; max-width: 15%">Action Plan 2</th>
+<th style="min-width:5%; max-width: 15%">Keterangan</th>
+{%endblock%}
+
+{%block content-table%}
+{% for item in items%}
+<tr>
+ <td style="vertical-align:middle;">{{item.no}}</td>
+
+ </tr>
+{%endfor%}
+{%endblock%}
