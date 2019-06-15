@@ -71,10 +71,13 @@
         </div>
     </div>
 </div>
+<br>
+
 <div>
     <div class="row">
             <div class="table-responsive col-sm-12">
-              <table class="table ">
+              <table class="table " style=" overflow-y: scroll;
+    max-height:250px;">
                 <thead>
                   <tr >
                     <th class="w-25">Tanggal</th>
@@ -83,7 +86,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                {%for item in history%}
+                {%for item in kedatangan%}
                   <tr >
                     <td>{{item.tanggal_keluar}}</td>
                     <td>{{item.bertemu_dengan}}</td>
@@ -98,10 +101,11 @@
     <br>
     <div class="row">
             <div class="table-responsive col-sm-12">
-              <table class="table ">
+              <table class="table " style=" display: inline-block;
+    overflow-y: scroll;
+    max-height:250px;">
                 <thead>
                   <tr >
-                    <th style="min-width:5%;">No.</th>
                     <th style="min-width:5%;">Tanggal Pelanggaran</th>
                     <th style="min-width:8%;">12 Basic</th>
                     <th style="min-width:7%;">Sub Kategori</th>
@@ -112,15 +116,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                {% for item in items%}
+                {% for item in pelanggaran%}
                 <tr>
-                    <td style="vertical-align:middle;">{{item.no}}</td>
-                    <td style="vertical-align:middle;">{{item.tanggal}}</td>
-                    <td style="vertical-align:middle;">{{item.12}}</td>
-                    <td style="vertical-align:middle;">{{item.subkategori}}</td>
-                    <td style="vertical-align:middle;">{{item.positivity}}</td>
-                    <td style="vertical-align:middle;">{{item.ap1}}</td>
-                    <td style="vertical-align:middle;">{{item.ap2}}</td>
+                    <td style="vertical-align:middle;">{{item.tanggal_pelanggaran}}</td>
+                    <td style="vertical-align:middle;">{{item.tipe_aktivitas_12}}</td>
+                    <td style="vertical-align:middle;">{{item.sub_kategori}}</td>
+                    <td style="vertical-align:middle;">{% if item.positif%} + {%else%} - {%endif%}</td>
+                    <td style="vertical-align:middle;">{{item.action_plan1}}</td>
+                    <td style="vertical-align:middle;">{{item.action_plan2}}</td>
                     <td style="vertical-align:middle;">{{item.keterangan}}</td>
                 </tr>
                 {%endfor%}

@@ -74,11 +74,13 @@ def users_detail(request, pk):
         raise Http404()
     context = {}
     context['tamu'] = tamu
-    kedatangans = Kedatangan.objects.filter(tamu_id = tamu.id)
-    kedatangans = kedatangans.order_by('-id')
-    kedatangans = list(kedatangans)
-    kedatangans = kedatangans[:-3]
-    context['kedatangan'] = kedatangans
+    # kedatangans = Kedatangan.objects.filter(tamu_id = tamu.id)
+    # kedatangans = kedatangans.order_by('-id')
+    # kedatangans = list(kedatangans)
+    # kedatangans = kedatangans[:-3]
+    # context['kedatangan'] = kedatangans
+    context['kedatangan'] = tamu.kedatangan_set.all()
+    context['pelanggaran'] = tamu.pelaporan_set.all()
     # return HttpResponse(context)
     return render(request,'pelaporan/users_detail.html', context) 
 
@@ -107,12 +109,15 @@ def get_tamu(request, uid):
     respons['nama'] = tamu.nama_tamu
     respons['hp'] = tamu.no_hp_tamu
     respons['perusahaan'] = tamu.perusahaan
+
     return JsonResponse(respons)
 
 @login_required
 def submit(request):
-    tamu = Tamu.objects.get(uid = request.POST['uid_pelaku'])
-
+    try:
+        tamu = Tamu.objects.get(uid = request.POST['uid_pelaku'])
+    except:
+        return HttpResponseRedirect(reverse('pelaporan:listlapor'))
     tamu.pelaporan_set.create(
         nama_pelapor = request.POST['nama_pelapor'],
         uid_pelapor = request.POST['uid_pelapor'],

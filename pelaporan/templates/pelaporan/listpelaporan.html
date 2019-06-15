@@ -1,10 +1,11 @@
 {% extends "pelaporan/template_table.html" %}
 {%block title%} List pelaporan {%endblock%}
-{% block content %}
-
-
-{% endblock %}
-
+{%block style%}
+td a {
+    display:block;
+    width:100%;
+}
+{%endblock%}
 {%block title-table %}
 List pelaporan
 {%endblock%}
@@ -31,7 +32,10 @@ List pelaporan
 <td style="vertical-align:middle;">{{item.nama_pelapor}}</td>
 <td style="vertical-align:middle;">{{item.tanggal}}</td>
 <td style="vertical-align:middle;">{{item.uid_pelaku}}</td>
-<td style="vertical-align:middle;">{{item.nama_pelaku}}</td>
+<td style="vertical-align:middle;">
+	<a href="\pelaporan\users\{{item.uid_pelaku}}">{{item.nama_pelaku}}</a>
+
+</td>
 <td style="vertical-align:middle;">{{item.12}}</td>
 <td style="vertical-align:middle;">{{item.subkategori}}</td>
 <td style="vertical-align:middle;">{{item.positivity}}</td>

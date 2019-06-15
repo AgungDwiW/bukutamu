@@ -13,7 +13,7 @@ class Tamu(models.Model):
     signed_in = models.BooleanField()
     perusahaan = models.CharField(max_length = 100)
     terakhir_datang = models.DateTimeField('terakhir_datang')
-    image = models.ImageField(upload_to= "static/bukutamu/camera/",null = True)
+    image = models.ImageField(upload_to= "camera/",null = True)
     uid.default = '000000000000'
     def delete_image(self):
         path = os.path.join(os.path.join(os.getcwd(), "media"), self.image.name)
