@@ -31,7 +31,7 @@ Bukutamu
 
 {%block content-table%}
 {% for item in items%}
-<tr>
+<tr class='clickable-row' data-href=/pelaporan/users/{{item.uid}}>
  <td style="vertical-align:middle;">{{item.no}}</td>
  <td style="text-align:left;">{{item.nama}}</td>
  <td style="text-align:left;">{{item.tanggal}}</td>

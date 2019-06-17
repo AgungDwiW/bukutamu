@@ -26,6 +26,7 @@ def bukutamu(request):
         temp['alasan'] = kedatangan.alasan_kedatangan
         temp['bertemu'] = kedatangan.bertemu_dengan
         temp['keperluan'] = kedatangan.alasan_kedatangan
+        temp['uid'] = tamu.uid
         if (kedatangan.tanggal_keluar == kedatangan.tanggal_kedatangan):
             temp['status'] = "Didalam"
         else:
@@ -136,6 +137,7 @@ def submit(request):
 @login_required
 def list_pelaporan(request):
     pelaporans = Pelaporan.objects.all()
+    pelaporans = pelaporans.order_by('-id')
     context = {}
     content = []
     counter = 1
