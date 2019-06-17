@@ -22,7 +22,7 @@
         <!-- Login Form -->
         <form method="POST" action="{%url 'bukutamu:form'%}">
 			{% csrf_token %}
-          <input type="text" id="UID" class="form-control" name="UID" placeholder="ID" aria-label="Search" required>
+          <input type="text" id="UID" class="form-control" name="UID" placeholder="ID" aria-label="Search" required autofocus>
           <input style="margin-top: 20px" type="submit" class="" value="Log In">
         </form>
 
