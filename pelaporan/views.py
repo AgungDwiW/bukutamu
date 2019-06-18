@@ -118,7 +118,15 @@ def get_tamu(request, uid):
     respons['nama'] = tamu.nama_tamu
     respons['hp'] = tamu.no_hp_tamu
     respons['perusahaan'] = tamu.perusahaan
-
+    respons['tipeid'] = tamu.tipeid
+    kedatangans = tamu.kedatangan_set.all()
+    kedatangans = kedatangans.order_by('-id')
+    kedatangans = list(kedatangans)
+    kedatangans = kedatangans[:4]
+    temp2 = {}
+    for kedatangan in kedatangans:
+        temp2[kedatangan.id] = kedatangan.tanggal_kedatangan.strftime("%d/%m/%Y %H:%M")
+    respons['kedatangan'] = temp2
     return JsonResponse(respons)
 
 @login_required
@@ -212,3 +220,6 @@ def dashboard(request):
     context = {'perusahaan' : perusahaan, 'perusahaan_pel':perusahaan_pel, 'bulan' : bulan, 'bulan_pel' : bulan_pel, 'area' : area_pel, 'departemen_pel':departemen_pel}
     # return JsonResponse(context)    
     return render(request, 'pelaporan/dashboard.html', context)
+
+def test(request):
+    return render(request, 'pelaporan/test.html')

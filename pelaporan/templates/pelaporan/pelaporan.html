@@ -48,7 +48,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;"><!-- UID -->
                       <label class="control-label col-sm-2" for="UID">UID :</label>
                       <div class="col-sm-7">  
-                        <input type="text" class="form-control inputsm" name="uid_pelaku" id="uid_pelaku" readonly placeholder="UID Pelaku" value =   > 
+                        <input type="text" class="form-control inputsm" name="uid_pelaku" id="uid_pelaku"  placeholder="UID Pelaku" value =   > 
                       </div>
                       <div class="col-sm-3">
                         <select class="form-control inputsm" name="tid_pelaku" id="tid_pelaku" placeholder="Tipe id" disabled  value = {{tamu.tipeid}}>
@@ -61,16 +61,8 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Nama Pelapor:</label>
                         <div class="col-sm-10">
-                            <select name="nama_pelaku" onchange="get_tamu()"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar" name="nama_pelaku">
-                            	<option>
-                            		
-                            	</option>
-                            	{%for item in items%}
-                            	<option>
-                            		{{item.nama_tamu}}
-                            	</option>
-                            	{%endfor%}
-                            </select></div>
+                            <input type = "text" name="nama_pelaku" onchange="get_tamu()"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar" name="nama_pelaku" readonly>
+                            	</div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Institusi:</label>
@@ -252,15 +244,29 @@ const institusi = document.getElementById("institusi")
 const no_hp = document.getElementById("no_hp")
 const uid = document.getElementById("uid_pelaku")
 const tid = document.getElementById("tid_pelaku")
-function get_tamu(){
-
-	index = nama.selectedIndex-1
-	console.log(index)
-	console.log(item[index])
-	cur = item[index]
-	institusi.value = cur['institusi']
+uid.addEventListener("keyup", 
+    function (event) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            cur = JSON.parse(this.responseText)
+            get_tamu(cur);
+            
+        }
+        };
+        event.preventDefault();
+        if (event.which == 13 || event.keyCode == 13) {
+           console.log("ajax/" + uid.value)
+            xhttp.open("GET", "/pelaporan/ajax/" + uid.value, true);
+            xhttp.send();
+            return false;
+    }
+    });
+function get_tamu(cur){
+    console.log(cur)
+	institusi.value = cur['perusahaan']
+    nama.value = cur['nama']
 	no_hp.value = cur['hp']
-	uid.value = cur['uid']
 	if (cur['tid'] == "KTP"){
 		tid.options[0].selected = true
 		console.log(tid.options[0].selected)

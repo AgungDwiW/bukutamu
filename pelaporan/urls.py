@@ -31,4 +31,5 @@ urlpatterns = [
     path('submit', views.submit, name = 'submit'),
     path('listlapor', views.list_pelaporan, name = 'listlapor'),
     path('dashboard', views.dashboard, name = 'dashboard'),
+    path('test', views.test, name = 'test'),
 ]
