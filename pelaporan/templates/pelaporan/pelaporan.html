@@ -40,14 +40,8 @@
                         </select>
                       </div>
                     </div>  
-                    <div class="form-group row" style="padding-bottom:1rem;">
-                        <label class="control-label col-sm-2" for="Tanggalpelanggaran">Tanggal Pelanggaran:</label>
-                        <div class="col-sm-10">
-                            <input type="date" name="tgl_langgar" class = "form-control inputsm"></div>
-                    </div>
                     
                     <hr style="display: block;" size="5">
-                    
                     <h4>Data Yang dilaporkan</h4>
                     <br>
                         
@@ -88,6 +82,28 @@
                         <div class="col-sm-10">
                             <input type="text" name="hp_pelaku" readonly  id = "no_hp" class = "form-control inputsm" placeholder="No. Handphone pelanggar"></div>
                     </div>
+                    <div class="form-group row" style="padding-bottom:1rem;">
+                        <label class="control-label col-sm-2" for="Tanggalpelanggaran">Tanggal Pelanggaran:</label>
+                        <div class="col-sm-10">
+                            <select name="tgl_langgar" class = "form-control inputsm" id = "tgl_langgar">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row" style="padding-bottom:1rem;">
+                        <label class="control-label col-sm-2" for="Tanggalpelanggaran">Area</label>
+                        <div class="col-sm-10">
+                            <select name="area" class = "form-control inputsm" id = "area" >
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr style="display: block;" size="5">
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Tipe Aktivitas di 12 Basic:</label>
                         <div class="col-sm-10">
@@ -230,13 +246,14 @@ item = item.replace(/&quot;/g, "'")
 item = JSON.stringify(eval("(" + item + ")"));
 item = JSON.parse(item);
 console.log(item)
-
+const tanggal = document.getElementById("tgl_langgar")
 const nama = document.getElementById("nama")
 const institusi = document.getElementById("institusi")
 const no_hp = document.getElementById("no_hp")
 const uid = document.getElementById("uid_pelaku")
 const tid = document.getElementById("tid_pelaku")
 function get_tamu(){
+
 	index = nama.selectedIndex-1
 	console.log(index)
 	console.log(item[index])
@@ -251,7 +268,13 @@ function get_tamu(){
 	else{
 		tid.options[2].selected = false
 	}
-	
+    kedatangan  = cur['kedatangan']
+	for (key in kedatangan){
+        var option = document.createElement("option");
+        option.text = kedatangan[key]
+        option.value = key
+        tanggal.add(option)
+    }
 
 };
 $('form input').on('keypress', function(e) {

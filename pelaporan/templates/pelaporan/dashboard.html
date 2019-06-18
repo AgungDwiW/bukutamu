@@ -117,10 +117,15 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
   var mydpengunjung = new Chart(ctxL, {
     type: 'line',
     data: {
+
       labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli" , "Agustus" , "September", "Oktober","November", "Desember"],
       datasets: [{
           label: "Jumlah Tamu",
-          data: [65, 59, 80, 81, 56, 55, 40 , 23 ,14 ,55 ,90 ,120 ],
+          data: [
+          	{% for item in bulan%}
+          	{{item}},
+          	{%endfor%}
+          ],
           backgroundColor: [
             'rgba(105, 0, 132, .2)',
           ],
@@ -131,7 +136,11 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
         },
         {
           label: "Pelanggaran Oleh tamu",
-          data: [28, 48, 40, 19, 86, 27, 90,28, 48, 40, 19, 86,],
+          data: [
+          {%for item in bulan_pel%}
+          {{item}},
+          {%endfor%}
+          ],
           backgroundColor: [
             'rgba(0, 137, 132, .2)',
           ],
@@ -155,7 +164,9 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
       labels: ["Area 1", "Area 2", "Area 3", "Area 4", "Area 5"],
       datasets: [{
         label: 'Area Pelanggaran',
-        data: [4, 6, 3, 5, 2, 3],
+        data: [{% for item in area%}
+        {{item}},
+        {%endfor%}],
         backgroundColor: [
           'rgba(155, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -189,9 +200,16 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
   var myinstitusichart = new Chart(ctxP, {
     type: 'pie',
     data: {
-      labels: ["ITS", "UB", "Cyber", "Tokopedia", "Vendor"],
+       labels: [
+      	{% for item, value in perusahaan.items%}
+      	'{{item}}',
+      	{%endfor%}
+      ],
       datasets: [{
-        data: [300, 50, 100, 40, 120],
+        data: [{% for item, value in perusahaan.items%}
+      	{{value}},
+      	{%endfor%}
+      	],
         backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
         hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
       }]
@@ -206,9 +224,16 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
   var myinstitusipelchart = new Chart(ctxP, {
     type: 'pie',
     data: {
-      labels: ["ITS", "UB", "Cyber", "Tokopedia", "Vendor"],
+      labels: [
+        {% for item, value in perusahaan_pel.items%}
+        '{{item}}',
+        {%endfor%}
+      ],
       datasets: [{
-        data: [400, 150, 1000, 50, 120],
+        data: [{% for item, value in perusahaan_pel.items%}
+        {{value}},
+        {%endfor%}
+        ],
         backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
         hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
       }]
@@ -222,10 +247,14 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
    new Chart(document.getElementById("Divisibar"), {
     "type": "horizontalBar",
     "data": {
-      "labels": ["Divisi a", "Divisi a", "Divisi b", "Divisi c", "Divisi d", "Divisi e", "Divisi f"],
+      "labels": [{% for item, value in departemen_pel.items%}
+        '{{item}}',
+        {%endfor%}],
       "datasets": [{
         "label": "Pelanggaran Oleh Tamu Divisi",
-        "data": [22, 33, 55, 12, 86, 23, 14],
+        "data": [{% for item, value in departemen_pel.items%}
+        {{value}},
+        {%endfor%}],
         "fill": false,
         "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)",
           "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",

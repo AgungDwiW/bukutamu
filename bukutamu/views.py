@@ -4,12 +4,12 @@ from django.shortcuts import get_object_or_404, render
 from base64 import b64decode
 from django.core.files.base import ContentFile
 from django.http import Http404
-from .models import Tamu, Kedatangan
+from .models import Tamu, Kedatangan, Departemen
 from django.utils import timezone
 from django.urls import reverse
 import re
 import os
-
+from django.http import JsonResponse
 # Create your views here.
 
 def index(request):
@@ -31,13 +31,20 @@ def form (request):
             formdata["kelamin"] = True
         if (tamu.tipeid == "SIM"):
             formdata["tipid"] = True
+        
         formdata["flag"] = True
         if (tamu.signed_in == True):
             formdata["flag"] = False
             kedatangan = tamu.kedatangan_set.get(out = False)
+            a = kedatangan.departemen
+            departemens = [a]
             formdata["kedatangan"]= kedatangan
             formdata['sakit'] = len(kedatangan.sakit) != 0
+        else:
+            departemens = Departemen.objects.all()
+        formdata['departemen'] = departemens
         formdata['tamu'] = tamu
+        # return JsonResponse()
         kedatangan_dulu = tamu.kedatangan_set.all()
         kedatangan_dulu = kedatangan_dulu.order_by('-id')
         kedatangan_dulu = list(kedatangan_dulu)
@@ -48,12 +55,15 @@ def form (request):
             kedatangan_dulu[0]=a
         for item in kedatangan_dulu:
             item.tanggal_keluar = item.tanggal_keluar.date()
+
         formdata["history"] = kedatangan_dulu
         # tamu.image = tamu.image.url
         # tamu.image = tamu.image.split("/")
         # tamu.image = tamu.image[len(tamu.image)-1]
 
     except (KeyError, Tamu.DoesNotExist):
+        departemens = Departemen.objects.all()
+        formdata['departemen'] = departemens
         formdata["flag"] = True
 
     return render(request, "bukutamu/form.html", formdata)
@@ -67,13 +77,6 @@ def signin(request):
     try:
         tamu = Tamu.objects.get(uid = request.POST['UID'])
         tamu.signed_in = True
-        # tamu.uid = request.POST['UID']
-        # tamu.tipeid = request.POST['TID']
-        # tamu.nama_tamu = request.POST['Nama']
-        # tamu.no_hp_tamu = request.POST['NoHP']
-        # tamu.jenis_kelamin = request.POST['Kelamin']
-        # tamu.perusahaan = request.POST['Institusi']
-        # tamu.terakhir_datang = timezone.now()
         tamu.delete_image()
         tamu.image = image
         tamu.save()
@@ -93,10 +96,6 @@ def signin(request):
             )
         tamu.image = image
         tamu.save()
-    try:
-        suhu = float(suhu)
-    except:
-        suhu = 0.0
     a = timezone.now()
     tamu.kedatangan_set.create(
         tanggal_kedatangan = a,
@@ -104,10 +103,11 @@ def signin(request):
         alasan_kedatangan = request.POST['Keperluan'],
         tanggal_keluar = a,
         lama_kedatangan = timezone.now() - timezone.now(),
-        suhu_badan = suhu,
+        suhu_badan = request.POST['Suhu'],
         terdapat_luka_terbuka = request.POST['Luka'],
         out = False,
         sakit = request.POST['Sakit'],
+        departemen = Departemen.objects.get(id = request.POST['departemen'])
         )
     return HttpResponseRedirect(reverse('bukutamu:index'))
 

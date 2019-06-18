@@ -105,7 +105,7 @@
 	        <div class="form-group row"> <!-- SUhu badan -->
 	          <label class="control-label col-sm-3" for="SuhuBadan">Suhu Badan:</label>
 	          <div class="col-sm-9">  
-	            <input type="number" step="any" class="form-control inputsm" name="SuhuBadan" id="SuhuBadan" placeholder="xx,x" required value = {{kedatangan.suhu_badan}} {%if not flag%} readonly {%endif%}>
+	            <input type="number" step="any" class="form-control inputsm" name="Suhu" id="Suhu" placeholder="xx,x" required value = {{kedatangan.suhu_badan}} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- BErtemu dengan -->
@@ -113,6 +113,21 @@
 	          <div class="col-sm-9">  
 	            <input type="text" class="form-control inputsm" name="Bertemu" id="Bertemu"
 	            placeholder="Bapak/Ibu" required value = {{kedatangan.bertemu_dengan}} {%if not flag%} readonly {%endif%}>
+	          </div>
+	        </div>
+	        <div class="form-group row"> <!-- BErtemu dengan -->
+	          <label class="control-label col-sm-3" for="Bertemu">Departemen:</label>
+	          <div class="col-sm-9">  
+	            <select type="text" class="form-control inputsm" name="departemen" id="departemen" required {%if not flag%} disabled {%endif%} 
+	            >
+	            	{%for item in departemen%}
+	            	<option value={{item.id}} 
+	            	{%if item.id == kedatangan.departemen%}
+	            	selected
+	            	{%endif%}
+	            	>{{item.nama_departemen}}</option>
+	            	{%endfor%}
+	        	</select>
 	          </div>
 	        </div>
 	        <div class="form-group row"> <!-- Keperluan -->

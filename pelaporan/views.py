@@ -1,14 +1,14 @@
 from django.shortcuts import render
-from bukutamu.models import Kedatangan, Tamu
+from bukutamu.models import Kedatangan, Tamu, Departemen
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.http import JsonResponse
 from .models import Pelaporan
-from bukutamu.models import Tamu
 from django.utils import timezone
 import json
+from time import strftime
 @login_required
 def bukutamu(request):
     kedatangans = Kedatangan.objects.all()
@@ -97,6 +97,14 @@ def lapor(request):
         temp['tipeid'] = tamu.tipeid
         temp['institusi'] = tamu.perusahaan
         temp['hp'] = tamu.no_hp_tamu
+        kedatangans = tamu.kedatangan_set.all()
+        kedatangans = kedatangans.order_by('-id')
+        kedatangans = list(kedatangans)
+        kedatangans = kedatangans[:4]
+        temp2 = {}
+        for kedatangan in kedatangans:
+            temp2[kedatangan.id] = kedatangan.tanggal_kedatangan.strftime("%d/%m/%Y %H:%M")
+        temp['kedatangan'] = temp2
         items.append(temp)
     context['items'] =  tamus
     context['json'] = json.dumps(items)
@@ -123,7 +131,7 @@ def submit(request):
         nama_pelapor = request.POST['nama_pelapor'],
         uid_pelapor = request.POST['uid_pelapor'],
         tid_pelapor = request.POST['tid_pelapor'],
-        tanggal_pelanggaran = request.POST['tgl_langgar'],
+        tanggal_pelanggaran = Kedatangan.objects.get(id = request.POST['tgl_langgar']).tanggal_kedatangan,
         tanggal_pelaporan = timezone.now(),
         tipe_aktivitas_12 = request.POST['aktivitas_12'],
         sub_kategori = request.POST['Subkategori'],
@@ -131,6 +139,8 @@ def submit(request):
         action_plan1 = request.POST['AP1'],
         action_plan2 = request.POST['AP2'],
         keterangan = request.POST['keterangan'],
+        departemen = Departemen.objects.get(id = request.POST["tgl_langgar"]),
+        area = int(request.POST['area']),
     )
     return HttpResponseRedirect(reverse('pelaporan:listlapor'))
 
@@ -163,4 +173,42 @@ def list_pelaporan(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'pelaporan/dashboard.html')
+    kedatangans = Kedatangan.objects.all()
+    bulan =[0 for a in range(12)]
+    for kedatangan in kedatangans:
+        cur_month = kedatangan.tanggal_kedatangan.strftime('%m')
+        cur_month = int(cur_month)
+        bulan[cur_month]+=1
+    tamus = Tamu.objects.all()
+    perusahaan = {}
+    for tamu in tamus:
+        if tamu.perusahaan in perusahaan:
+            perusahaan[tamu.perusahaan]+=1
+        else:
+            perusahaan[tamu.perusahaan] = 1
+    bulan_pel = [0 for a in range (12)]
+    area_pel = [0 for a in range(5)]
+    departemen_pel = {}
+    pelanggarans = Pelaporan.objects.all()
+    departemens = Departemen.objects.all()
+    # test = []
+    perusahaan_pel = {}
+    for departemen in departemens:
+        departemen_pel[departemen.nama_departemen] = len(departemen.pelaporan_set.all())
+    for pelaporan in pelanggarans:
+        tamu = pelaporan.pelaku
+        a = tamu.perusahaan 
+        if tamu.perusahaan in perusahaan_pel:
+            perusahaan_pel[tamu.perusahaan]+=1
+        else:
+            perusahaan_pel[tamu.perusahaan] = 1
+        cur_month = pelaporan.tanggal_pelanggaran.strftime('%m')
+        cur_month = int(cur_month)
+        bulan_pel[cur_month]+=1
+        area_pel [pelaporan.area-1] +=1            
+        # test.append(pelaporan.area)
+    
+    context = [perusahaan, bulan]
+    context = {'perusahaan' : perusahaan, 'perusahaan_pel':perusahaan_pel, 'bulan' : bulan, 'bulan_pel' : bulan_pel, 'area' : area_pel, 'departemen_pel':departemen_pel}
+    # return JsonResponse(context)    
+    return render(request, 'pelaporan/dashboard.html', context)
