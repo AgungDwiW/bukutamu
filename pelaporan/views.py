@@ -161,3 +161,6 @@ def list_pelaporan(request):
 
     return render(request,'pelaporan/listpelaporan.html', context) 
 
+@login_required
+def dashboard(request):
+    return render(request, 'pelaporan/dashboard.html')

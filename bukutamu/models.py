@@ -30,11 +30,16 @@ class Tamu(models.Model):
     def __str__(self):
         return self.nama_tamu
 
+class Departemen(models.Model):
+    nama_departemen = models.CharField(max_length = (50))
+    penanggungjawab = models.CharField(max_length = (50))
+    email = models.CharField(max_length = (50))
 
 class Kedatangan(models.Model):
     tamu = models.ForeignKey(Tamu, on_delete= models.CASCADE)
     tanggal_kedatangan = models.DateTimeField("datang")
     bertemu_dengan = models.CharField(max_length=(100))
+    departemen = models.ForeignKey(Departemen,models.SET_NULL,blank=True,null=True,)
     alasan_kedatangan = models.CharField(max_length = 300)
     tanggal_keluar = models.DateTimeField("keluar")
     lama_kedatangan = models.DurationField("lama")
