@@ -9,6 +9,8 @@ from .models import Pelaporan
 from django.utils import timezone
 import json
 from time import strftime
+from django.db.models import Q
+
 @login_required
 def bukutamu(request):
     kedatangans = Kedatangan.objects.all()
@@ -128,6 +130,24 @@ def get_tamu(request, uid):
         temp2[kedatangan.id] = kedatangan.tanggal_kedatangan.strftime("%d/%m/%Y %H:%M")
     respons['kedatangan'] = temp2
     return JsonResponse(respons)
+
+@login_required
+def get_pelanggaran(request, uid, tipe12, sub):
+    dic = {'status':False}
+    try:
+        tamu = Tamu.objects.get(uid = uid)
+    except:
+        return JsonResponse(dic)
+    try:
+        tipe12 = tipe12.replace("_"," ")
+        sub= 
+        pelanggaran = tamu.pelanngaran_set.filter(tipe_aktivitas_12 = tipe12, 
+            subkategori = sub)
+        return JsonResponse(pelanggaran)
+    except:
+        return JsonResponse(dic)
+
+
 
 @login_required
 def submit(request):

@@ -256,7 +256,7 @@ uid.addEventListener("keyup",
         };
         event.preventDefault();
         if (event.which == 13 || event.keyCode == 13) {
-           console.log("ajax/" + uid.value)
+           console.log("tamu_ajax/" + uid.value)
             xhttp.open("GET", "/pelaporan/ajax/" + uid.value, true);
             xhttp.send();
             return false;
