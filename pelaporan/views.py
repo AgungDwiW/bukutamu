@@ -71,7 +71,6 @@ def users(request):
 @login_required
 def users_detail(request, pk):
     try:
-        pk = int(pk)
         tamu = Tamu.objects.get(uid=pk)
     except :
         raise Http404()
@@ -134,18 +133,24 @@ def get_tamu(request, uid):
 @login_required
 def get_pelanggaran(request, uid, tipe12, sub):
     dic = {'status':False}
-    try:
-        tamu = Tamu.objects.get(uid = uid)
-    except:
-        return JsonResponse(dic)
-    try:
-        tipe12 = tipe12.replace("_"," ")
-        sub= sub.replace("_"," ")
-        pelanggaran = tamu.pelanngaran_set.filter(tipe_aktivitas_12 = tipe12, 
-            subkategori = sub)
-        return JsonResponse(pelanggaran)
-    except:
-        return JsonResponse(dic)
+    # try:
+    #     tamu = Tamu.objects.get(uid = uid)
+    # except:
+    #     return JsonResponse(dic)
+    tamu = Tamu.objects.get(uid = uid)
+    tipe12 = tipe12.replace("_"," ")
+    sub= sub.replace("_"," ")
+    pelanggaran = tamu.pelaporan_set.filter(tipe_aktivitas_12 = tipe12, sub_kategori = sub)
+    context = []
+    for item in pelanggaran:
+        temp = {}
+        temp['tanggal'] = item.tanggal_pelanggaran
+        temp['area'] = item.area
+        temp['departemen'] = item.departemen
+        context
+    return JsonResponse(pelanggaran)
+    # except:
+    #     return JsonResponse(dic)
 
 
 
