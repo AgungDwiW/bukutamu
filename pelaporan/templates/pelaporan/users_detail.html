@@ -140,7 +140,7 @@
 </div>
 
 {%endblock%}
-<script type="text/javascript">
+{%block script %}
 var ctxL = document.getElementById("dpengunjung").getContext('2d');
   var mydpengunjung = new Chart(ctxL, {
     type: 'line',
@@ -183,4 +183,4 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
       responsive: true
     }
   });
-</script>
+{%endblock%}

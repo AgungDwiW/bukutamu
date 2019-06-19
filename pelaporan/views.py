@@ -10,6 +10,7 @@ from django.utils import timezone
 import json
 from time import strftime
 from django.db.models import Q
+import math
 
 @login_required
 def bukutamu(request):
@@ -76,14 +77,25 @@ def users_detail(request, pk):
         raise Http404()
     context = {}
     context['tamu'] = tamu
-    # kedatangans = Kedatangan.objects.filter(tamu_id = tamu.id)
-    # kedatangans = kedatangans.order_by('-id')
-    # kedatangans = list(kedatangans)
-    # kedatangans = kedatangans[:-3]
-    # context['kedatangan'] = kedatangans
     context['kedatangan'] = tamu.kedatangan_set.all()
     context['pelanggaran'] = tamu.pelaporan_set.all()
-    # return HttpResponse(context)
+    counter_bulan = [0 for a in range(12)]
+    bulan = [0 for a in range(12)]
+    for item in context['kedatangan']:
+        bulan_cur = item.tanggal_kedatangan.strftime("%m")
+        bulan_cur = int(bulan_cur)
+        counter_bulan[bulan_cur]+=1
+        kedatangan = item.lama_kedatangan
+        kedatangan = kedatangan.seconds + (kedatangan.days * 24*3600)
+        kedatangan2 = kedatangan/3600
+        kedatangan2 = math.floor(kedatangan2)
+        if (kedatangan%3600 > 40):
+            kedatangan2+=1
+        bulan[bulan_cur]+=kedatangan2
+        lama = item.lama_kedatangan
+        if kedatangan == 0:
+            continue
+    context['bulan'] = bulan
     return render(request,'pelaporan/users_detail.html', context) 
 
 @login_required
