@@ -141,14 +141,17 @@ def get_pelanggaran(request, uid, tipe12, sub):
     tipe12 = tipe12.replace("_"," ")
     sub= sub.replace("_"," ")
     pelanggaran = tamu.pelaporan_set.filter(tipe_aktivitas_12 = tipe12, sub_kategori = sub)
-    context = []
+    context = {}
+    lists =[]
     for item in pelanggaran:
         temp = {}
-        temp['tanggal'] = item.tanggal_pelanggaran
+        temp['tanggal'] = item.tanggal_pelanggaran.strftime("%d/%m/%Y")
         temp['area'] = item.area
-        temp['departemen'] = item.departemen
-        context.append(temp)
-    context = json.dumps(context)
+        temp['departemen'] = item.departemen.nama_departemen
+        temp['ap1'] = item.action_plan1
+        temp['ap2'] = item.action_plan2
+        lists.append(temp)
+    context['pelanggaran'] = lists
     return JsonResponse(context)
     # except:
     #     return JsonResponse(dic)

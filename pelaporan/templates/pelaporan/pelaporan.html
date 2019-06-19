@@ -7,7 +7,7 @@
     <!-- /.card-header -->
     <div class="card-body">
             <!-- Grid -->
-        <form id="msform" style="height:auto; width:auto;" method="post" action={% url 'pelaporan:submit'%} >
+        <form id="msform" style="height:auto; width:auto;" method="post" onsubmit="return validateform()" action={% url 'pelaporan:submit'%} >
         <!-- fieldsets -->
         	{% csrf_token %}
             <fieldset>
@@ -48,7 +48,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;"><!-- UID -->
                       <label class="control-label col-sm-2" for="UID">UID :</label>
                       <div class="col-sm-7">  
-                        <input type="text" class="form-control inputsm" name="uid_pelaku" id="uid_pelaku"  placeholder="UID Pelaku" value =   > 
+                        <input type="text" class="form-control inputsm" required name="uid_pelaku" id="uid_pelaku"  placeholder="UID Pelaku" value =   > 
                       </div>
                       <div class="col-sm-3">
                         <select class="form-control inputsm" name="tid_pelaku" id="tid_pelaku" placeholder="Tipe id" disabled  value = {{tamu.tipeid}}>
@@ -77,7 +77,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Tanggalpelanggaran">Tanggal Pelanggaran:</label>
                         <div class="col-sm-10">
-                            <select name="tgl_langgar" class = "form-control inputsm" id = "tgl_langgar">
+                            <select name="tgl_langgar" required disabled class = "form-control inputsm" id = "tgl_langgar">
                                 
                             </select>
                         </div>
@@ -86,7 +86,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Tanggalpelanggaran">Area</label>
                         <div class="col-sm-10">
-                            <select name="area" class = "form-control inputsm" id = "area" >
+                            <select name="area" disabled class = "form-control inputsm" id = "area" >
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -97,9 +97,9 @@
                     </div>
                     <hr style="display: block;" size="5">
                     <div class="form-group row" style="padding-bottom:1rem;">
-                        <label class="control-label col-sm-2" for="nama">Tipe Aktivitas di 12 Basic:</label>
+                        <label class="control-label col-sm-2" onchange="get_pelanggaran()" for="nama">Tipe Aktivitas di 12 Basic:</label>
                         <div class="col-sm-10">
-                            <select class="form-control inputsm" name="aktivitas_12" id="aktivitas_12" placeholder="Tipe id"  value = {{tamu.tipeid}}>
+                            <select class="form-control inputsm" name="aktivitas_12" id="aktivitas_12" placeholder="Tipe id" disabled >
                             <option>Pilih</option>
                             <option >Work at Height</option>
                             <option >Chemical Product</option>
@@ -120,7 +120,7 @@
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Sub Kategori:</label>
                         <div class="col-sm-10">
-                            <select class="form-control inputsm" name="Subkategori" id="Subketegori"   value = {{tamu.tipeid}}>
+                            <select class="form-control inputsm" disabled onchange="get_pelanggaran()" name="Subkategori" id="Subketegori"   value = {{tamu.tipeid}}>
                             <option selected disabled>Pilih</option>
                             <optgroup label="Reaksi Orang">
                                 <option >A1 Menyesuaikan APD</option>
@@ -188,10 +188,39 @@
 
                         </div>
                     </div>   
+                    <!-- <div class="form-group row" style="padding-bottom:1rem;" id = "hidme" hidden>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover" id = "table" style=" display: inline-block;
+                overflow-y: scroll;
+                max-height:250px;">
+                            <thead>
+                              <tr >
+                                <th style="min-width:25%;">Tanggal</th>
+                                <th style="min-width:5%;">Area</th>
+                                <th style="min-width:70%;">Departemen penanggung jawab</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            
+                          </table>
+                        </div>
+                    </div> -->
+                    <table id="table" class="table table-bordered table-hover"
+                                    style="font-size:10pt; text-align:center; vertical-align:middle;" hidden>
+                                    <thead>
+                                        <th style="min-width:25%;">Tanggal</th>
+                                <th style="min-width:5%;">Area</th>
+                                <th style="min-width:70%;">Departemen penanggung jawab</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                            </tfoot>
+                            </table>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Positif/Negatif</label>
                         <div class="col-sm-10">
-                            <select class="form-control inputsm" name="positivity" id="positivity" placeholder="Tipe id"  value = {{tamu.tipeid}}>
+                            <select class="form-control inputsm" disabled name="positivity" id="positivity" placeholder="Tipe id"  value = {{tamu.tipeid}}>
                             <option selected value="0">Negatif</option>
                             <option value="1">Positif</option>
 
@@ -201,18 +230,18 @@
                      <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Action plan 1">Action plan 1:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="AP1" class = "form-control inputsm" placeholder="Action plan 1"></div>
+                            <input type="text" name="AP1" id = "AP1" disabled class = "form-control inputsm" placeholder="Action plan 1"></div>
                     </div>
 
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Action plan 2">Action plan 2:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="AP2" class = "form-control inputsm" placeholder="Action plan 2"></div>
+                            <input type="text" name="AP2" id = "AP2" disabled class = "form-control inputsm" placeholder="Action plan 2"></div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Action plan 2">Keterangan:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="keterangan" class = "form-control inputsm" placeholder="Keterangan"></div>
+                            <input type="text" name="keterangan" disabled id = "keterangan"  class = "form-control inputsm" placeholder="Keterangan"></div>
                     </div>
 
                     <div class="col-sm-12 center"> 
@@ -244,14 +273,57 @@ const institusi = document.getElementById("institusi")
 const no_hp = document.getElementById("no_hp")
 const uid = document.getElementById("uid_pelaku")
 const tid = document.getElementById("tid_pelaku")
+const tipe12 = document.getElementById('aktivitas_12')
+const sub = document.getElementById('Subketegori')
+const hide = document.getElementById('table')
+const table = document.getElementById('table').getElementsByTagName('tbody')[0];
+const positif = document.getElementById('positivity')
+const ap1 = document.getElementById('AP1')
+const ap2 = document.getElementById('AP2')
+const ket = document.getElementById('keterangan')
+const area = document.getElementById('area')
+var valid = false
+function activate(){
+    tipe12.disabled = false
+    sub.disabled = false
+    positif.disabled = false
+    ap1.disabled = false
+    ap2.disabled = false
+    ket.disabled = false
+    tanggal.disabled = false
+    area.disabled = false
+}
+
+function deactivate(){
+    tipe12.disabled = true
+    sub.disabled = true
+    positif.disabled = true
+    ap1.disabled = true
+    ap2.disabled = true
+    ket.disabled = true   
+    tanggal.disabled = true
+    area.disabled = true
+}
+
+validateform(){
+    return valid
+}
+
 uid.addEventListener("keyup", 
     function (event) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             cur = JSON.parse(this.responseText)
+            activate()
+            valid = true
             get_tamu(cur);
-            
+
+        }
+        if (this.readyState == 4 &&this.status == 500) {
+            deactivate();
+            valid = false
+            alert("data tamu tak dapat ditemukan")
         }
         };
         event.preventDefault();
@@ -283,6 +355,56 @@ function get_tamu(cur){
     }
 
 };
+
+function get_pelanggaran(){
+    
+    if (!((uid.value != "") && (tipe12.options[tipe12.selectedIndex].text != "Pilih" && sub.options[sub.selectedIndex].text!="Pilih"))){
+        
+        return false
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        cur = JSON.parse(this.responseText)
+        console.log(cur);
+        pelanggaran(cur);
+    }};
+    var str_12 = tipe12.options[tipe12.selectedIndex].text
+    var str_sub = sub.options[sub.selectedIndex].text
+    str_12 = str_12.replace(/ /g, "_");
+    str_sub = str_sub.replace(/ /g, "_");
+    query = "/pelaporan/pelanggaran_ajax/" +uid.value+"/"+str_12+"/"+ str_sub
+    console.log(query)
+    xhttp.open("GET", query, true);
+    xhttp.send();
+}
+function pelanggaran(json){
+    content = json.pelanggaran
+    if (content.length == 0){
+        hide.hidden = true
+        return false
+    }
+    else{
+        for (a = 0; a<table.childElementCount; a++){
+            table.deleteRow(0)
+        }
+        for (a = 0; a<content.length;a++)
+        {
+            console.log(content[a])
+            row = table.insertRow(0)
+            cell1 = row.insertCell(0)
+            cell2 = row.insertCell(1)
+            cell3 = row.insertCell(2)
+            hide.hidden = false 
+            cell1.innerHTML = content[a].tanggal
+            cell2.innerHTML = content[a].area
+            cell3.innerHTML = content[a].departemen
+        }
+        
+    }
+}
+
+
 $('form input').on('keypress', function(e) {
     return e.which !== 13;
 });

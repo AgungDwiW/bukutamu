@@ -95,7 +95,7 @@
                     <div hidden id= "hidme"> Pelanggaran yang sama :
                     	<div class="row">
             <div class="table-responsive col-sm-12">
-              <table class="table " id ="tabel_pelanggaran" style=" overflow-y: scroll;
+              <table class="table " id ="table" style=" overflow-y: scroll;
     max-height:250px;">
                 <thead>
                   <tr >
@@ -146,6 +146,7 @@
         if (this.readyState == 4 && this.status == 200) {
         	cur = JSON.parse(this.responseText)
             console.log(cur);
+            pelanggaran(cur);
         }};
         var str_12 = tipe12.options[tipe12.selectedIndex].text
         var str_sub = sub.options[sub.selectedIndex].text
@@ -155,5 +156,27 @@
 		console.log(query)
 		xhttp.open("GET", query, true);
 		xhttp.send();
+	}
+	function pelanggaran(json){
+		content = json.pelanggaran
+		if (content.length == 0){
+			hide.hidden = true
+			return false
+		}
+		else{
+			for (a = 0; a<content.length;a++)
+			{
+				console.log(content[a])
+				row = table.insertRow(1)
+				cell1 = row.insertCell(0)
+				cell2 = row.insertCell(1)
+				cell3 = row.insertCell(2)
+				hide.hidden = false	
+				cell1.innerHTML = content[a].tanggal
+				cell2.innerHTML = content[a].area
+				cell3.innerHTML = content[a].departemen
+			}
+			
+		}
 	}
 </script>
