@@ -75,6 +75,12 @@
 
 <div>
     <div class="row">
+       <div class="column" >
+        <h3>Data kunjungan</h3>
+        <canvas id="dpengunjung"></canvas>
+     </div>
+    </div>
+    <div class="row">
             <div class="table-responsive col-sm-12">
               <table class="table " style=" overflow-y: scroll;
     max-height:250px;">
@@ -134,3 +140,47 @@
 </div>
 
 {%endblock%}
+<script type="text/javascript">
+var ctxL = document.getElementById("dpengunjung").getContext('2d');
+  var mydpengunjung = new Chart(ctxL, {
+    type: 'line',
+    data: {
+
+      labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli" , "Agustus" , "September", "Oktober","November", "Desember"],
+      datasets: [{
+          label: "Jumlah kedatangan",
+          data: [
+            {% for item in bulan%}
+            {{item}},
+            {%endfor%}
+          ],
+          backgroundColor: [
+            'rgba(105, 0, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(200, 99, 132, .7)',
+          ],
+          borderWidth: 2
+        },
+        {
+          label: "Jumlah Pelanggaran",
+          data: [
+          {%for item in bulan_pel%}
+          {{item}},
+          {%endfor%}
+          ],
+          backgroundColor: [
+            'rgba(0, 137, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(0, 10, 130, .7)',
+          ],
+          borderWidth: 2
+        }
+      ]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
