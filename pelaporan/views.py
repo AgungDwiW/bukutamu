@@ -140,7 +140,7 @@ def get_pelanggaran(request, uid, tipe12, sub):
         return JsonResponse(dic)
     try:
         tipe12 = tipe12.replace("_"," ")
-        sub= 
+        sub= sub.replace("_"," ")
         pelanggaran = tamu.pelanngaran_set.filter(tipe_aktivitas_12 = tipe12, 
             subkategori = sub)
         return JsonResponse(pelanggaran)
