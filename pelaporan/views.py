@@ -95,18 +95,6 @@ def lapor(request):
         temp =  {}
         temp['nama'] = tamu.nama_tamu
         temp['uid'] = tamu.uid
-        temp['tipeid'] = tamu.tipeid
-        temp['institusi'] = tamu.perusahaan
-        temp['hp'] = tamu.no_hp_tamu
-        kedatangans = tamu.kedatangan_set.all()
-        kedatangans = kedatangans.order_by('-id')
-        kedatangans = list(kedatangans)
-        kedatangans = kedatangans[:4]
-        temp2 = {}
-        for kedatangan in kedatangans:
-            temp2[kedatangan.id] = kedatangan.tanggal_kedatangan.strftime("%d/%m/%Y %H:%M")
-        temp['kedatangan'] = temp2
-        items.append(temp)
     context['items'] =  tamus
     context['json'] = json.dumps(items)
     return render(request, 'pelaporan/pelaporan.html', context)
@@ -147,8 +135,9 @@ def get_pelanggaran(request, uid, tipe12, sub):
         temp['tanggal'] = item.tanggal_pelanggaran
         temp['area'] = item.area
         temp['departemen'] = item.departemen
-        context
-    return JsonResponse(pelanggaran)
+        context.append(temp)
+    context = json.dumps(context)
+    return JsonResponse(context)
     # except:
     #     return JsonResponse(dic)
 
