@@ -2,14 +2,13 @@
 
 {%block head%}
     {% load static %}
-    <link href="{% static "bukutamu/css/form.css" %}" rel="stylesheet">
-    <!------ Include the above in your HEAD tag ---------->
+    
 {%endblock%}
 
 {%block content%}
 <div style="margin: auto;">
     <div class="row vertical-align">
-        <div class="col-sm-6" style="margin: auto" >
+        <div class="col-sm-6 center" style="margin: auto" >
             <img src = "{{tamu.image.url}}" width=80%  ></img>
             
             
@@ -73,13 +72,22 @@
 </div>
 <br>
 
-<div>
-    <div class="row">
-       <div class="column" >
-        <h3 style="text-align: center;">Data kunjungan</h3>
-        <canvas id="dpengunjung"></canvas>
-     </div>
+<div style="margin: auto;">
+    <div class="row vertical-align">
+        <div class="col-sm-6 center" style="margin: auto" >
+            <h3 style="text-align: center;">Data Jam kunjungan</h3>
+            <canvas id="djampengunjung"></canvas>
+            
+        </div>
+        <div class="col-sm-6 v-divider">
+            <h3 style="text-align: center;">Data kunjungan</h3>
+            <canvas id="dpengunjung"></canvas>
+              
+        </div>
     </div>
+</div>
+<br>
+<div>
     <div class="row">
             <div class="table-responsive col-sm-12">
               <table class="table " style=" overflow-y: scroll;
@@ -177,6 +185,35 @@ var ctxL = document.getElementById("dpengunjung").getContext('2d');
           ],
           borderWidth: 2
         }
+      ]
+    },
+    options: {
+      responsive: true
+    }
+  });
+
+var ctxL = document.getElementById("djampengunjung").getContext('2d');
+  var mydpengunjung = new Chart(ctxL, {
+    type: 'line',
+    data: {
+
+      labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli" , "Agustus" , "September", "Oktober","November", "Desember"],
+      datasets: [{
+          label: "Jam kedatangan",
+          data: [
+            {% for item in bulan%}
+            {{item}},
+            {%endfor%}
+          ],
+          backgroundColor: [
+            'rgba(105, 0, 132, .2)',
+          ],
+          borderColor: [
+            'rgba(200, 99, 132, .7)',
+          ],
+          borderWidth: 2
+        },
+        
       ]
     },
     options: {
