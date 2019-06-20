@@ -84,7 +84,7 @@ def signin(request):
         tamu.delete_image()
         tamu.image = image
         tamu.save()
-        pelanggaran = tamu.pelaporan_set.count()
+        pelanggaran = tamu.pelaporan_set.filter(positif = False).count()
         
         if (pelanggaran >= 3):
             tamu.signed_in = False
