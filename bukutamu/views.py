@@ -45,6 +45,10 @@ def form (request):
         formdata['departemen'] = departemens
         formdata['tamu'] = tamu
         # return JsonResponse()
+        pelanggaran = tamu.pelanggaran_set.count()
+        formdata['flag_auth'] =True
+        if (formdata['flag'] and pelanggaran >= 3):
+            formdata['flag_auth'] =False
         kedatangan_dulu = tamu.kedatangan_set.all()
         kedatangan_dulu = kedatangan_dulu.order_by('-id')
         kedatangan_dulu = list(kedatangan_dulu)

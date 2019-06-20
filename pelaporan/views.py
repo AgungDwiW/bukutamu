@@ -176,6 +176,8 @@ def submit(request):
         tamu = Tamu.objects.get(uid = request.POST['uid_pelaku'])
     except:
         return HttpResponseRedirect(reverse('pelaporan:listlapor'))
+    temp = Kedatangan.objects.get(id = request.POST["tgl_langgar"])
+    temp = temp.departemen
     tamu.pelaporan_set.create(
         nama_pelapor = request.POST['nama_pelapor'],
         uid_pelapor = request.POST['uid_pelapor'],
@@ -188,7 +190,7 @@ def submit(request):
         action_plan1 = request.POST['AP1'],
         action_plan2 = request.POST['AP2'],
         keterangan = request.POST['keterangan'],
-        departemen = Departemen.objects.get(id = request.POST["tgl_langgar"]),
+        departemen = temp,
         area = int(request.POST['area']),
     )
     return HttpResponseRedirect(reverse('pelaporan:listlapor'))
