@@ -35,19 +35,6 @@
             <input type="hidden" name="next" value="{{ next }}" />
              <!-- {{form.username}}
              {{form.password}} -->
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-
             <input style="margin-top: 20px" type="submit" class="" value="Log In">
           </form>
 
@@ -55,3 +42,18 @@
       </div>
     </div>
 </body>
+
+ {% if form.errors %}
+      <script type="text/javascript">
+        alert("Username atau password salah")
+      </script>
+  {% endif %}
+
+  {% if next %}
+    
+      <script type="text/javascript">
+        alert("Anda harus login terlebih dahulu")
+      </script>
+      
+    
+  {% endif %}

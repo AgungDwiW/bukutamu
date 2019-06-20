@@ -24,11 +24,7 @@ app_name = 'bukutamu'
 urlpatterns = [
 	path('', views.index, name='index'),
 	path('form', views.form, name='form'),
-    # path('', views.index, name='index'),
+    path ('laporan', views.laporan, name = 'laporan'),
     path('signin', views.signin, name='signin'),
     path('signout', views.signout, name='signout'),
-    # path('out', views.out, name = 'out'),
-    # path('signout', views.signout, name="signout")
-    path('test', views.test, name='test'),
-    path('formtest', views.formtest, name = 'formtest'),
 ]

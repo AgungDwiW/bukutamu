@@ -133,5 +133,5 @@ def signout(request):
 def test(request):
     return render(request, 'bukutamu/test.html')
 
-def formtest(request):
-    pass
+def laporan(request):
+    return render(request, 'bukutamu/laporan.html')
