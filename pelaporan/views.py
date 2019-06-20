@@ -90,7 +90,7 @@ def users_detail(request, pk):
         kedatangan = kedatangan.seconds + (kedatangan.days * 24*3600)
         kedatangan2 = kedatangan/3600
         kedatangan2 = math.floor(kedatangan2)
-        if (kedatangan%3600 > 40):
+        if (kedatangan%3600 > (40*60)):
             kedatangan2+=1
         bulan[bulan_cur]+=kedatangan2
         lama = item.lama_kedatangan
@@ -102,7 +102,7 @@ def users_detail(request, pk):
         bulan_cur = item.tanggal_pelanggaran.strftime("%m")
         bulan_cur = int(bulan_cur)
         bulan_pel[bulan_cur]+=1
-    context [bulan_pel]+=1
+    context ['bulan_pel']= bulan_pel
 
     return render(request,'pelaporan/users_detail.html', context) 
 

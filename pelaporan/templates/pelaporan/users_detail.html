@@ -1,8 +1,12 @@
 {%extends "pelaporan/template.html"%}
-
+{%block title%} Detail Tamu {%endblock%}
 {%block head%}
     {% load static %}
     
+{%endblock%}
+
+{%block title-table %}
+Detail Tamu                 
 {%endblock%}
 
 {%block content%}
@@ -90,7 +94,8 @@
 <div>
     <div class="row">
             <div class="table-responsive col-sm-12">
-              <table class="table " style=" overflow-y: scroll;
+              <table class="table " style=" display: inline-block;
+    overflow-y: scroll;
     max-height:250px;">
                 <thead>
                   <tr >
@@ -201,7 +206,7 @@ var ctxL = document.getElementById("djampengunjung").getContext('2d');
       datasets: [{
           label: "Jam kedatangan",
           data: [
-            {% for item in bulan%}
+            {% for item in bulan_jam%}
             {{item}},
             {%endfor%}
           ],
