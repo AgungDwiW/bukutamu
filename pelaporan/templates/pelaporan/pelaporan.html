@@ -305,6 +305,11 @@ function deactivate(){
 }
 
 function validateform(){
+    var str_12 = tipe12.options[tipe12.selectedIndex].text
+    var str_sub = sub.options[sub.selectedIndex].text
+    if (str_12.innerHTML == str_sub.innerHTML == "Pilih"){
+        return false
+    }
     return valid
 }
 
@@ -315,7 +320,7 @@ uid.addEventListener("keyup",
         if (this.readyState == 4 && this.status == 200) {
             cur = JSON.parse(this.responseText)
             activate()
-            valid = true
+            valid = false
             get_tamu(cur);
 
         }

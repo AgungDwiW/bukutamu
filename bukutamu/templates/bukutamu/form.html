@@ -164,9 +164,6 @@
 	            <input type="text" class="form-control input-sm " name="Sakit" id="Sakit"  placeholder="Sehat" {%if not flag%} readonly {%endif%} required value = {{kedatangan.sakit}}  >
 	          </div>
 	        </div>
-	        <div class="form-group row"  hidden id="hidme">
-	        	<label class="control-label col-sm-12" ><h3>Pelanggaran melebihi 3</h3></label>
-	        </div>
 	        <div class="form-group row"  >
   			<input type="hidden" id = "Image" name = "Image">
   				<div class="col-sm-6"> 
@@ -202,7 +199,6 @@
   const lukay = document.getElementById('Luka1')
   const lukan = document.getElementById('Luka2')
   var sakit_flag = false
-  const hid = document.getElementById("hidme")
   const nama = document.getElementById("Nama")
   const hp = document.getElementById("NoHP")
   const inst = document.getElementById("Institusi")
@@ -212,6 +208,7 @@
   const submit = document.getElementById("submit")
   const flag = {{flag_auth}}
   const departemen = document.getElementById("departemen")
+
   if (!flag){
   	suhu_badan.disabled = true
   	bertemu.disabled = true
@@ -222,8 +219,7 @@
   	lukay.disabled = true
   	lukan.disabled = true
   	departemen.disabled = true
-  	hid.hidden = false
-
+  	alert("anda telah melakukan pelanggaran lebih dari 3 kali")
   }
 
   const constraints = {

@@ -11,6 +11,9 @@ import json
 from time import strftime
 from django.db.models import Q
 import math
+from django.conf import settings
+from django.core.mail import send_mail
+
 
 @login_required
 def bukutamu(request):
@@ -178,8 +181,8 @@ def submit(request):
         return HttpResponseRedirect(reverse('pelaporan:listlapor'))
     temp = Kedatangan.objects.get(id = request.POST["tgl_langgar"])
     temp = temp.departemen
-    ap1 =  "-" if  request.POST['AP1'] == "" else  request.POST['AP1']
-    ap2 =  "-" if  request.POST['AP2'] == "" else  request.POST['AP2']
+    ap1 =  request.POST['AP1'] 
+    ap2 =  request.POST['AP2'] 
     tamu.pelaporan_set.create(
         nama_pelapor = request.POST['nama_pelapor'],
         uid_pelapor = request.POST['uid_pelapor'],
@@ -195,9 +198,14 @@ def submit(request):
         departemen = temp,
         area = int(request.POST['area']),
     )
-    if (tamu.pelaporan_set.count>=3):
-        #send email here
-        pass
+    if (tamu.pelaporan_set.count()>=3):
+        email_to = [temp.email]
+        email_from=settings.EMAIL_HOST_USER
+        subject = "pelanggaran melebihi baatas oleh:" + tamu.nama_tamu
+        message = "detail tamu:<br> Nama"+tamu.nama_tamu+"<br>"+"institusi tamu :"+tamu.perusahaan
+        send_mail(subject, message, settings.EMAIL_HOST_USER,
+            email_to, fail_silently=True)
+        
 
     return HttpResponseRedirect(reverse('pelaporan:listlapor'))
 
