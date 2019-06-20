@@ -228,15 +228,15 @@
                         </div>
                     </div>
                      <div class="form-group row" style="padding-bottom:1rem;">
-                        <label class="control-label col-sm-2" for="Action plan 1">Action plan 1:</label>
+                        <label class="control-label col-sm-2"  hidden id = "AP1_lab" for="Action plan 1">Action plan 1:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="AP1" id = "AP1" disabled class = "form-control inputsm" placeholder="Action plan 1"></div>
+                            <input type="text" name="AP1" id = "AP1" hidden disabled class = "form-control inputsm" placeholder="Action plan 1" hidden></div>
                     </div>
 
                     <div class="form-group row" style="padding-bottom:1rem;">
-                        <label class="control-label col-sm-2" for="Action plan 2">Action plan 2:</label>
+                        <label class="control-label col-sm-2" id = "AP2_lab" hidden for="Action plan 2">Action plan 2:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="AP2" id = "AP2" disabled class = "form-control inputsm" placeholder="Action plan 2"></div>
+                            <input type="text" name="AP2" id = "AP2" disabled class = "form-control inputsm" placeholder="Action plan 2" hidden></div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="Action plan 2">Keterangan:</label>
@@ -280,6 +280,8 @@ const table = document.getElementById('table').getElementsByTagName('tbody')[0];
 const positif = document.getElementById('positivity')
 const ap1 = document.getElementById('AP1')
 const ap2 = document.getElementById('AP2')
+const ap1_lab = document.getElementById('AP1_lab')
+const ap2_lab = document.getElementById('AP2_lab')
 const ket = document.getElementById('keterangan')
 const area = document.getElementById('area')
 var valid = false
@@ -305,7 +307,7 @@ function deactivate(){
     area.disabled = true
 }
 
-validateform(){
+function validateform(){
     return valid
 }
 
@@ -378,11 +380,17 @@ function get_pelanggaran(){
     xhttp.open("GET", query, true);
     xhttp.send();
 }
+var flag = 0
 function pelanggaran(json){
     content = json.pelanggaran
     if (content.length == 0){
         hide.hidden = true
+        ap1_lab.hidden = false
+        ap1.hidden = false
+        console.log(ap1.hidden)
         return false
+        
+
     }
     else{
         for (a = 0; a<table.childElementCount; a++){
@@ -399,8 +407,34 @@ function pelanggaran(json){
             cell1.innerHTML = content[a].tanggal
             cell2.innerHTML = content[a].area
             cell3.innerHTML = content[a].departemen
+            if (content[a].ap1!="" ||content[a].ap1!=undefined){
+                ap1.hidden = false
+                ap1.value = content[a].ap1
+                console.log(content[a].ap1)
+                console.log(ap1.value)
+                ap1.disabled = true
+                flag = 1
+            }
+            if (content[a].ap2!=""){
+                ap1.hidden = false
+                ap2.value = content[a].ap2
+                ap1.disabled = true
+                ap2.disabled = true
+                flag = 2
+            }
         }
         
+        if (flag ==0){
+            ap1_lab.hidden = false
+            ap1.hidden = false
+            console.log(ap1.hidden)
+        }   
+        else{
+            ap1_lab.hidden = false
+            ap1.hidden = false
+            ap2_lab.hidden = false
+            ap2.hidden = false
+        }
     }
 }
 

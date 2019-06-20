@@ -81,6 +81,7 @@ def users_detail(request, pk):
     context['pelanggaran'] = tamu.pelaporan_set.all()
     counter_bulan = [0 for a in range(12)]
     bulan = [0 for a in range(12)]
+    bulan_pel = [0 for a in range(12)]
     for item in context['kedatangan']:
         bulan_cur = item.tanggal_kedatangan.strftime("%m")
         bulan_cur = int(bulan_cur)
@@ -95,7 +96,14 @@ def users_detail(request, pk):
         lama = item.lama_kedatangan
         if kedatangan == 0:
             continue
-    context['bulan'] = bulan
+    context['bulan_jam'] = bulan
+    context['bulan'] = counter_bulan
+    for item in context['pelanggaran']:
+        bulan_cur = item.tanggal_pelanggaran.strftime("%m")
+        bulan_cur = int(bulan_cur)
+        bulan_pel[bulan_cur]+=1
+    context [bulan_pel]+=1
+
     return render(request,'pelaporan/users_detail.html', context) 
 
 @login_required
@@ -145,11 +153,15 @@ def get_pelanggaran(request, uid, tipe12, sub):
     lists =[]
     for item in pelanggaran:
         temp = {}
+        temp['ap1'] = ""
+        temp['ap2'] = ""
         temp['tanggal'] = item.tanggal_pelanggaran.strftime("%d/%m/%Y")
         temp['area'] = item.area
         temp['departemen'] = item.departemen.nama_departemen
-        temp['ap1'] = item.action_plan1
-        temp['ap2'] = item.action_plan2
+        if (item.action_plan1!= ""):
+            temp['ap1'] = item.action_plan1
+        if (item.action_plan2 != ""):
+            temp['ap2'] = item.action_plan2
         lists.append(temp)
     context['pelanggaran'] = lists
     return JsonResponse(context)
