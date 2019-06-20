@@ -20,11 +20,12 @@
         <!-- Icon -->
         
         <!-- Login Form -->
-        <form method="POST" action="{%url 'bukutamu:form'%}">
+        <form method="POST" action="{%url 'bukutamu:form'%}" class="center">
 			{% csrf_token %}
           <input type="text" id="UID" class="form-control" name="UID" placeholder="ID" aria-label="Search" required autofocus>
-          <input style="margin-top: 20px" type="submit" class="" value="Log In">
-        </form>
+          <br>
+          <input style="margin-top: 40px; width: 80%; text-align: center;" type="submit" class="" value="Log In">
+         </form>
 
     
       </div>
