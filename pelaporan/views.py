@@ -151,7 +151,7 @@ def get_pelanggaran(request, uid, tipe12, sub):
     tamu = Tamu.objects.get(uid = uid)
     tipe12 = tipe12.replace("_"," ")
     sub= sub.replace("_"," ")
-    pelanggaran = tamu.pelaporan_set.filter(tipe_aktivitas_12 = tipe12, sub_kategori = sub)
+    pelanggaran = tamu.pelaporan_set.filter(tipe_aktivitas_12 = tipe12, sub_kategori = sub, positif = False)
     context = {}
     lists =[]
     for item in pelanggaran:
@@ -198,7 +198,7 @@ def submit(request):
         departemen = temp,
         area = int(request.POST['area']),
     )
-    if (tamu.pelaporan_set.count()>=3):
+    if (tamu.pelaporan_set.filter(positif=False).count()>=3):
         email_to = [temp.email]
         email_from=settings.EMAIL_HOST_USER
         subject = "pelanggaran melebihi baatas oleh:" + tamu.nama_tamu
