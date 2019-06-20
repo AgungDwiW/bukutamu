@@ -178,6 +178,8 @@ def submit(request):
         return HttpResponseRedirect(reverse('pelaporan:listlapor'))
     temp = Kedatangan.objects.get(id = request.POST["tgl_langgar"])
     temp = temp.departemen
+    ap1 =  "-" if  request.POST['AP1'] == "" else  request.POST['AP1']
+    ap2 =  "-" if  request.POST['AP2'] == "" else  request.POST['AP2']
     tamu.pelaporan_set.create(
         nama_pelapor = request.POST['nama_pelapor'],
         uid_pelapor = request.POST['uid_pelapor'],
@@ -187,12 +189,16 @@ def submit(request):
         tipe_aktivitas_12 = request.POST['aktivitas_12'],
         sub_kategori = request.POST['Subkategori'],
         positif =request.POST['positivity'],
-        action_plan1 = request.POST['AP1'],
-        action_plan2 = request.POST['AP2'],
+        action_plan1 = ap1,
+        action_plan2 = ap2,
         keterangan = request.POST['keterangan'],
         departemen = temp,
         area = int(request.POST['area']),
     )
+    if (tamu.pelaporan_set.count>=3):
+        #send email here
+        pass
+
     return HttpResponseRedirect(reverse('pelaporan:listlapor'))
 
 @login_required

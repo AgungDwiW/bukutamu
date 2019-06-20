@@ -84,13 +84,13 @@
 	        <div class="form-group row"> <!-- no HP -->
 	          <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
 	          <div class="col-sm-9">  
-	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
+	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" autocomplete="off" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"><!-- Jenis kelamin -->
 	          <label class="control-label col-sm-3" for="kelamin">Jenis Kelamin:</label>
 	          <div class="col-sm-9">  
-	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} readonly value = {{tamu.jenis_kelamin}} {%endif%} {%if not flag%} readonly {%endif%}>
+	            <select class="form-control inputsm" name="Kelamin" id="Kelamin" placeholder="L/P" {%if tamu.jenis_kelamin %} disabled value = {{tamu.jenis_kelamin}} {%endif%} {%if not flag%} readonly {%endif%}>
 	            	<option>Laki laki</option>
 				    <option {%if kelamin%}selected{%endif%}>Perempuan</option>
 	            </select>
@@ -141,10 +141,10 @@
 	      	<!-- </div>
 	      	<div class="form-group row"> -->
 	          	<label class="radio-inline col-sm-2">
-	            <input type="radio"  name="Luka" id="Luka" {% if kedatangan.terdapat_luka_terbuka%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} {%if not flag%}  disabled {%endif%} value = "1"> Ya
+	            <input type="radio"  name="Luka" id="Luka1" {% if kedatangan.terdapat_luka_terbuka%} checked=true  {%endif%}{%if not flag%}  disabled {%endif%} {%if not flag%}  disabled {%endif%} value = "1"> Ya
 	        	</label>
 	        	<label class="radio-inline col-sm-2">
-	            <input type="radio"  name="Luka"{%if not flag%}  disabled {%endif%} {% if not  kedatangan.terdapat_luka_terbuka%} checked=true {%endif%} id = Luka value="0"> Tidak
+	            <input type="radio"  name="Luka" id ="Luka2"{%if not flag%}  disabled {%endif%} {% if not  kedatangan.terdapat_luka_terbuka%} checked=true {%endif%} id = Luka value="0"> Tidak
 	        	</label>
 	        </div>
 	        <div class="form-group row">
@@ -164,6 +164,9 @@
 	            <input type="text" class="form-control input-sm " name="Sakit" id="Sakit"  placeholder="Sehat" {%if not flag%} readonly {%endif%} required value = {{kedatangan.sakit}}  >
 	          </div>
 	        </div>
+	        <div class="form-group row"  hidden id="hidme">
+	        	<label class="control-label col-sm-12" ><h3>Pelanggaran melebihi 3</h3></label>
+	        </div>
 	        <div class="form-group row"  >
   			<input type="hidden" id = "Image" name = "Image">
   				<div class="col-sm-6"> 
@@ -171,11 +174,11 @@
 	  			</div>
   				{%if flag%}
 	  			<div class="col-sm-6"> 
-		  			<input type="submit" name="submit" id = "submit" class="col-sm-11 ">
+		  			<input type="submit" name="submit" id = "submit" class="col-sm-11 btn">
 	  			</div>
 	  			{%else%}
 	  			<div class="col-sm-6"> 
-	  				<input id="cancel " type="submit" name="submit" id = "submit" class="col-sm-11 center" value = "logout">
+	  				<input id="cancel " type="submit" name="submit" id = "submit" class="col-sm-11 center btn" value = "logout">
 	  			</div>
 	  			{%endif%}
 	  			
@@ -194,15 +197,34 @@
   const context = canvas.getContext('2d');
   const image = document.getElementById('Image')
   const radio_sakit = document.getElementById('sakit_radio_y')
+  const radio_sakitn = document.getElementById('sakit_radio_n')
   const sakit = document.getElementById('Sakit')
+  const lukay = document.getElementById('Luka1')
+  const lukan = document.getElementById('Luka2')
   var sakit_flag = false
-
+  const hid = document.getElementById("hidme")
   const nama = document.getElementById("Nama")
   const hp = document.getElementById("NoHP")
   const inst = document.getElementById("Institusi")
-  const suhu_badan = document.getElementById("SuhuBadan")
+  const suhu_badan = document.getElementById("Suhu")
   const bertemu = document.getElementById("Bertemu")
   const keperluan = document.getElementById("Keperluan")
+  const submit = document.getElementById("submit")
+  const flag = {{flag_auth}}
+  const departemen = document.getElementById("departemen")
+  if (!flag){
+  	suhu_badan.disabled = true
+  	bertemu.disabled = true
+  	keperluan.disabled = true
+  	radio_sakit.disabled = true
+  	radio_sakitn.disabled = true
+  	submit.disabled = true
+  	lukay.disabled = true
+  	lukan.disabled = true
+  	departemen.disabled = true
+  	hid.hidden = false
+
+  }
 
   const constraints = {
     video: true,

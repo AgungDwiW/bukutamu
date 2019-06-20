@@ -23,7 +23,7 @@ def b64toMime(b64_text):
 def form (request):
     formdata = {}
     formdata ["uid"] = request.POST['UID']
-    
+    formdata['flag_auth'] ="true"
     try:
         # searching existing tamu's data
         tamu = Tamu.objects.get(uid = request.POST['UID'])
@@ -45,10 +45,10 @@ def form (request):
         formdata['departemen'] = departemens
         formdata['tamu'] = tamu
         # return JsonResponse()
-        pelanggaran = tamu.pelanggaran_set.count()
-        formdata['flag_auth'] =True
+        pelanggaran = tamu.pelaporan_set.count()
+        formdata['flag_auth'] ="true"
         if (formdata['flag'] and pelanggaran >= 3):
-            formdata['flag_auth'] =False
+            formdata['flag_auth'] ="false"
         kedatangan_dulu = tamu.kedatangan_set.all()
         kedatangan_dulu = kedatangan_dulu.order_by('-id')
         kedatangan_dulu = list(kedatangan_dulu)
@@ -84,6 +84,12 @@ def signin(request):
         tamu.delete_image()
         tamu.image = image
         tamu.save()
+        pelanggaran = tamu.pelaporan_set.count()
+        
+        if (pelanggaran >= 3):
+            tamu.signed_in = False
+            tamu.save()
+            return HttpResponseRedirect(reverse('bukutamu:index'))
 
     except (KeyError, Tamu.DoesNotExist):
         #if not exist create new
