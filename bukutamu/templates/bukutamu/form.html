@@ -18,11 +18,11 @@
    <div class="row vertical-align">
     <div class="col-sm-6" >
       {%if flag%}
-          <video id="player" controls autoplay width="100%" ></video>
+          <video id="player" controls autoplay width="90%" ></video>
           <canvas id="canvas" class="col-sm-12" hidden=""></canvas>
       {%else%}
           {% with '/'|add:tamu.image.url as image_static %} 
-              <img src = "{{tamu.image.url}}" width=100% ></img>
+              <img src = "{{tamu.image.url}}" width=100% height=56%></img>
           {% endwith %}
           
       {%endif%}
