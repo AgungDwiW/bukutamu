@@ -195,6 +195,10 @@ def submit(request):
         departemen = temp,
         area = int(request.POST['area']),
     )
+    if (tamu.pelaporan_set.count>=3):
+        #send email here
+        pass
+
     return HttpResponseRedirect(reverse('pelaporan:listlapor'))
 
 @login_required
