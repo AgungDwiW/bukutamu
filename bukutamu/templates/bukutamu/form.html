@@ -84,7 +84,7 @@
 	        <div class="form-group row"> <!-- no HP -->
 	          <label class="control-label col-sm-3" for="NoHP">Nomor HP:</label>
 	          <div class="col-sm-9">  
-	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
+	            <input type="number" class="form-control inputsm" name="NoHP" id="NoHP" placeholder="08xxxxxxxxxx" autocomplete="off" required {%if tamu.no_hp_tamu%} readonly value = {{tamu.no_hp_tamu}} {%endif%} {%if not flag%} readonly {%endif%}>
 	          </div>
 	        </div>
 	        <div class="form-group row"><!-- Jenis kelamin -->
