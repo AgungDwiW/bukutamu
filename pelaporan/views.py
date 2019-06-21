@@ -131,6 +131,7 @@ def get_tamu(request, uid):
     respons['hp'] = tamu.no_hp_tamu
     respons['perusahaan'] = tamu.perusahaan
     respons['tipeid'] = tamu.tipeid
+    respons['saved'] = tamu.saved
     kedatangans = tamu.kedatangan_set.all()
     kedatangans = kedatangans.order_by('-id')
     kedatangans = list(kedatangans)

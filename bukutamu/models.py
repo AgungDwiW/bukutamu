@@ -7,14 +7,16 @@ from django.utils import timezone
 class Tamu(models.Model):
     uid = models.CharField(max_length = 12)
     tipeid = models.CharField(max_length = 20)
-    nama_tamu = models.CharField(max_length = 100)
-    no_hp_tamu = models.CharField(max_length = 30)
-    jenis_kelamin = models.CharField(max_length = 20)
-    signed_in = models.BooleanField()
-    perusahaan = models.CharField(max_length = 100)
-    terakhir_datang = models.DateTimeField('terakhir_datang')
+    nama_tamu = models.CharField(max_length = 100,null = True)
+    no_hp_tamu = models.CharField(max_length = 30,null = True)
+    jenis_kelamin = models.CharField(max_length = 20,null = True)
+    signed_in = models.BooleanField(null = True)
+    perusahaan = models.CharField(max_length = 100,null = True)
+    terakhir_datang = models.DateTimeField('terakhir_datang',null = True)
     image = models.ImageField(upload_to= "camera/",null = True)
     uid.default = '000000000000'
+    saved = models.BooleanField()
+    saved.default = True
     def delete_image(self):
         path = os.path.join(os.path.join(os.getcwd(), "media"), self.image.name)
         try:
@@ -27,8 +29,15 @@ class Tamu(models.Model):
     def last(self):
         #bool terakhir datang 30 hari terakhir
         return self.terakhir_datang >= timezone.now() - datetime.timedelta(days=30)
+    def dest(self):
+
+        return True
+
     def __str__(self):
-        return self.nama_tamu
+        if(self.nama_tamu != None):
+            return self.nama_tamu
+        else:
+            return "-"
 
 class Departemen(models.Model):
     nama_departemen = models.CharField(max_length = (50))

@@ -40,6 +40,7 @@ def form (request):
             departemens = [a]
             formdata["kedatangan"]= kedatangan
             formdata['sakit'] = len(kedatangan.sakit) != 0
+            formdata['save'] = tamu.saved
         else:
             departemens = Departemen.objects.all()
         formdata['departemen'] = departemens
@@ -74,6 +75,7 @@ def form (request):
 
 
 def signin(request):
+    
     image = request.POST['Image']
     image = b64decode(image)
     image = ContentFile(image, request.POST['UID'])
@@ -83,6 +85,7 @@ def signin(request):
         tamu.signed_in = True
         tamu.delete_image()
         tamu.image = image
+        tamu.saved = True if request.POST['save'] == "Ya" else False
         tamu.save()
         pelanggaran = tamu.pelaporan_set.filter(positif = False).count()
         
@@ -103,6 +106,7 @@ def signin(request):
             terakhir_datang = timezone.now(),
             image = None,
             signed_in = True,
+            saved = True if request.POST['save'] == "Ya" else False
             )
         tamu.image = image
         tamu.save()
@@ -123,8 +127,18 @@ def signin(request):
 
 def signout(request):
     tamu = Tamu.objects.get(uid = request.POST['UID'])
+    if not tamu.saved :
+        tamu.tipeid = None
+        tamu.nama_tamu = None
+        tamu.no_hp_tamu = None
+        tamu.jenis_kelamin = None
+        tamu.terakhir_datang = None
+        tamu.image = None
+        tamu.saved = None
+        tamu.signed_in = False
+        tamu.save()
     tamu.signed_in = False
-    tamu.save()
+    tamu.save()        
     kedatangan = tamu.kedatangan_set.get(out = False)
     kedatangan.signout()
     kedatangan.save()

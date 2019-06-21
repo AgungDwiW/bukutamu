@@ -58,7 +58,7 @@ Form Pelaporan
                     <div class="form-group row" style="padding-bottom:1rem;">
                         <label class="control-label col-sm-2" for="nama">Nama Pelapor:</label>
                         <div class="col-sm-10">
-                            <input type = "text" name="nama_pelaku" onchange="get_tamu()"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar" name="nama_pelaku" readonly>
+                            <input type = "text" name="nama_pelaku"  class = "form-control inputsm" id= "nama" placeholder="Nama Pelanggar" name="nama_pelaku" readonly>
                             	</div>
                     </div>
                     <div class="form-group row" style="padding-bottom:1rem;">
@@ -344,6 +344,11 @@ function get_tamu(cur){
 	institusi.value = cur['perusahaan']
     nama.value = cur['nama']
 	no_hp.value = cur['hp']
+    if (!cur['saved']){
+        nama.value = "Deleted"
+        no_hp.value = "Deleted"
+        tid.value = "Deleted"
+    }
 	if (cur['tid'] == "KTP"){
 		tid.options[0].selected = true
 		console.log(tid.options[0].selected)
