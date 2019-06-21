@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from bukutamu.models import Kedatangan, Tamu, Departemen
+from bukutamu.models import Kedatangan, Tamu, Departemen, Year
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -32,6 +32,7 @@ def bukutamu(request):
         temp['alasan'] = kedatangan.alasan_kedatangan
         temp['bertemu'] = kedatangan.bertemu_dengan
         temp['keperluan'] = kedatangan.alasan_kedatangan
+        temp['departemen'] = kedatangan.departemen.nama_departemen
         temp['uid'] = tamu.uid
         if (kedatangan.tanggal_keluar == kedatangan.tanggal_kedatangan):
             temp['status'] = "Didalam"
@@ -212,6 +213,7 @@ def submit(request):
 
 @login_required
 def list_pelaporan(request):
+    year = Year.objects.order_by('year')[0]
     pelaporans = Pelaporan.objects.all()
     pelaporans = pelaporans.order_by('-id')
     context = {}
@@ -234,7 +236,7 @@ def list_pelaporan(request):
         temp['keterangan'] = pelaporan.keterangan
         content.append(temp)
     context ['items'] = content
-
+    context['years'] = Year.objects.all()
     return render(request,'pelaporan/listpelaporan.html', context) 
 
 @login_required

@@ -1,5 +1,8 @@
 {%extends "pelaporan/template.html"%}
 {%block title%} Form Laporan {%endblock%}
+{%block title-table %}
+Dashboard               
+{%endblock%}
 
 {%block style%}
 <style>
@@ -42,7 +45,6 @@
 
 {%block content %} 
 <div class="wrapper" style="text-align: center;">
-	<h1 style="text-align: center;">Dashboard</h1>
 	<div id="btnContainer">
 	  <button class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</button> 
 	  <button class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</button>

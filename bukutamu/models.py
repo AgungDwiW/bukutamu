@@ -43,6 +43,11 @@ class Departemen(models.Model):
     nama_departemen = models.CharField(max_length = (50))
     penanggungjawab = models.CharField(max_length = (50))
     email = models.CharField(max_length = (50))
+    def __str__(self):
+        return self.nama_departemen
+
+class Year (models.Model):
+    year = models.IntegerField()
 
 class Kedatangan(models.Model):
     tamu = models.ForeignKey(Tamu, on_delete= models.CASCADE)

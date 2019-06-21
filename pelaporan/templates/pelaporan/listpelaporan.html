@@ -8,6 +8,16 @@ td a {
 {%endblock%}
 {%block title-table %}
 List pelaporan
+<select class="col-sm-2" style="right: 20px;position: absolute;">
+	{%for item in years%}
+		{% if forloop.last %}
+		<option selected>{{item.year}}</option>
+		
+		{%else%}
+		<option selected>{{item.year}}</option>
+		{%endif%}
+	{%endfor%}
+</select>
 {%endblock%}
 
 {%block header-table%}
@@ -31,9 +41,11 @@ List pelaporan
  <td style="vertical-align:middle;">{{item.no}}</td>
 <td style="vertical-align:middle;">{{item.nama_pelapor}}</td>
 <td style="vertical-align:middle;">{{item.tanggal}}</td>
-<td style="vertical-align:middle;">{{item.uid_pelaku}}</td>
 <td style="vertical-align:middle;">
-	<a href="\pelaporan\users\{{item.uid_pelaku}}">{{item.nama_pelaku}}</a>
+<a href="\pelaporan\users\{{item.uid_pelaku}}">{{item.uid_pelaku}}</a>
+</td>
+<td style="vertical-align:middle;">
+	{{item.nama_pelaku}}
 
 </td>
 <td style="vertical-align:middle;">{{item.12}}</td>

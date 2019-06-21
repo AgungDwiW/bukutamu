@@ -104,6 +104,7 @@ Detail Tamu
                   <tr >
                     <th class="w-25">Tanggal</th>
                      <th class="w-25">Bertemu dengan</th>
+                     <th class="w-25">Departemen</th>
                     <th class="w-50">Keperluan</th>
                   </tr>
                 </thead>
@@ -112,6 +113,7 @@ Detail Tamu
                   <tr >
                     <td>{{item.tanggal_keluar}}</td>
                     <td>{{item.bertemu_dengan}}</td>
+                    <td>{{item.departemen.nama_departemen}}</td>
                     <td>{{item.alasan_kedatangan }}</td>
                   </tr>
                 {%endfor%}

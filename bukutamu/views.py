@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from base64 import b64decode
 from django.core.files.base import ContentFile
 from django.http import Http404
-from .models import Tamu, Kedatangan, Departemen
+from .models import Tamu, Kedatangan, Departemen, Year
 from django.utils import timezone
 from django.urls import reverse
 import re
@@ -111,6 +111,13 @@ def signin(request):
         tamu.image = image
         tamu.save()
     a = timezone.now()
+    years = Year.objects.all()
+    year = []
+    for item in years:
+        year.append(years.year)
+    if not (timezone.now().year in year):
+        year = Year(year = timezone.now().year)
+        year.save()
     tamu.kedatangan_set.create(
         tanggal_kedatangan = a,
         bertemu_dengan = request.POST['Bertemu'],
