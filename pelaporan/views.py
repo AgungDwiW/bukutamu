@@ -213,8 +213,8 @@ def submit(request):
 
 @login_required
 def list_pelaporan(request):
-    year = Year.objects.order_by('year')[0]
-    pelaporans = Pelaporan.objects.all()
+    year = timezone.now().year
+    pelaporans = Pelaporan.objects.filter(tanggal_kedatangan__year = year)
     pelaporans = pelaporans.order_by('-id')
     context = {}
     content = []
